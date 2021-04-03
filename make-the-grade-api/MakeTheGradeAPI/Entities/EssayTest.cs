@@ -7,6 +7,11 @@ namespace MakeTheGradeAPI.Entities
 {
     public class EssayTest:Test
     {
+
+        public EssayTest()
+        {
+
+        }
         public EssayTest(int id, string question, Grader grader)
         {
             this.Id = id;

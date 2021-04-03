@@ -1,15 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MakeTheGradeAPI.Entities
 {
-    public class Student : User
+    public class Student
     {
-        public Student(int id, string username, string password, string email, string phoneNumber, string address, string numarMatricol)
+        [Column("id", TypeName = "int")]
+        public int Id { get; set; }
+
+        [Column("username", TypeName = "string")]
+        public string Username { get; set; }
+
+        [Column("password", TypeName = "string")]
+        public string Password { get; set; }
+
+        [Column("email", TypeName = "string")]
+        public string Email { get; set; }
+
+        [Column("phoneNumber", TypeName = "string")]
+        public string PhoneNumber { get; set; }
+
+        [Column("address", TypeName = "string")]
+        public string Address { get; set; }
+
+        public Student()
         {
-            this.Id = id;
+
+        }
+        public Student(string username, string password, string email, string phoneNumber, string address, string numarMatricol)
+        {
             this.Username = username;
             this.Password = password;
             this.Email = email;
@@ -18,8 +40,7 @@ namespace MakeTheGradeAPI.Entities
             this.NumarMatricol = numarMatricol;
         }
 
-        public float Grade { get; set; }
-
+        [Column("nr_matricol", TypeName = "string")]
         public string NumarMatricol { get; set; }
 
         public ICollection<MultipleChoiceTest> SubmitedMultipleChoiceTests { get; set; } = new List<MultipleChoiceTest>();
@@ -28,40 +49,19 @@ namespace MakeTheGradeAPI.Entities
 
         public ICollection<EssayTest> SubmitedEssayTests { get; set; } = new List<EssayTest>();
 
-        void calculateGrade()
-        {
-            float sum = 0;
-            foreach(MultipleChoiceTest test in SubmitedMultipleChoiceTests)
-            {
-                sum += test.Score;
-            }
-            foreach (ShortAnswerTest test in SubmitedShortAnswerTests)
-            {
-                sum += test.Score;
-            }
-            foreach (EssayTest test in SubmitedEssayTests)
-            {
-                sum += test.Score;
-            }
-            Grade = sum / (SubmitedMultipleChoiceTests.Count + SubmitedShortAnswerTests.Count + SubmitedEssayTests.Count);
-        }
-
         void AddMultipleChoiceTest(MultipleChoiceTest test)
         {
             SubmitedMultipleChoiceTests.Add(test);
-            calculateGrade();
         }
 
         void AddShortAnswerTest(ShortAnswerTest test)
         {
             SubmitedShortAnswerTests.Add(test);
-            calculateGrade();
         }
 
         void AddEssayTest(EssayTest test)
         {
             SubmitedEssayTests.Add(test);
-            calculateGrade();
         }
     }
 }

@@ -7,6 +7,10 @@ namespace MakeTheGradeAPI.Entities
 {
     public class Grader : User
     {
+        public Grader()
+        {
+
+        }
         public Grader(int id, string username, string password, string email, string phoneNumber, string address)
         {
             this.Id = id;

@@ -1,7 +1,12 @@
 ﻿using MakeTheGradeAPI.Entities;
+using MakeTheGradeAPI.Model;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MakeTheGradeAPI.Controllers
 {
@@ -9,46 +14,75 @@ namespace MakeTheGradeAPI.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-      
-        static Student student1 = new Student(0, "Student1", "parola1", "student1@test.com", "0755555555", "Iasi, Romania", "017582917581");
-        static Student student2 = new Student(1, "Student2", "parola2", "student2@test.com", "0755555554", "Iasi, Romania", "017582417581");
-        static Grader grader1 = new Grader(2, "Grader1", "parola3", "grader1@test.com", "0755555555", "Iasi, Romania");
+        private readonly DataContext _context;
 
-        public static List<Student> Students { get; set; } = new List<Student>()
+        public UsersController(DataContext context)
         {
-            student1, student2
-        };
-
-        public static List<User> Users { get; set; } = new List<User>()
-        {
-            student1, student2, grader1
-        };
-
-        [HttpGet("/all")]
-        public ActionResult<IEnumerable<User>> findUsers()
-        {
-            return Users;
+            _context = context;
         }
+
+        private string hashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+        //public static List<User> Users { get; set; } = new List<User>()
+        //{
+        //    student1, student2, grader1
+        //};
+
+        //[HttpGet("/all")]
+        //public ActionResult<IEnumerable<User>> findUsers()
+        //{
+        //    return Users;
+        //}
 
         [HttpGet("/all-students")]
         public ActionResult<IEnumerable<Student>> findStudents()
         {
-            return Students;
+            return _context.Student.ToList();
         }
 
         [HttpPost("/find-student")]
         public ActionResult<int> FindStudent([FromBody] List<string> studentData)
         {
-            foreach(Student student in Students)
+            List<Student> Students = _context.Student.ToList();
+
+            string hashedPassword = "";
+
+            hashedPassword = hashPassword(studentData[1]);
+
+            foreach (Student student in Students)
             {
-                System.Console.WriteLine(student.Username);
-                System.Console.WriteLine(student.Password);
-                if (student.Username == studentData[0] && student.Password == studentData[1])
+                if (student.Username == studentData[0] && student.Password == hashedPassword)
                 {
                     return student.Id;
                 }
             }
             return -1;
+        }
+
+        [HttpPost("/add-student")]
+        public async Task<ActionResult<string>> AddStudent([FromBody] List<string> studentData)
+        {
+            Student studentToAdd = new Student(studentData[0], hashPassword(studentData[1]), studentData[2], "", studentData[3], "");
+
+            _context.Student.Add(studentToAdd);
+            await _context.SaveChangesAsync();
+
+            return "Student added";
         }
     }
 }

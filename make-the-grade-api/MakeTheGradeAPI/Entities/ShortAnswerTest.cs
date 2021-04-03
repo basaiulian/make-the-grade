@@ -7,6 +7,10 @@ namespace MakeTheGradeAPI.Entities
 {
     public class ShortAnswerTest : Test
     {
+        public ShortAnswerTest()
+        {
+
+        }
         public ShortAnswerTest(int id, string question, Grader grader)
         {
             this.Id = id;
