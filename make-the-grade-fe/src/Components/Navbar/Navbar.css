@@ -1,0 +1,30 @@
+.navigation-bar{
+
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content:flex-end;
+    height: 60px;
+    
+}
+
+a{
+    color:black;
+    text-decoration: none;
+    font-family: "Montserrat";
+
+
+}
+
+.nav-items{
+    width:300px;
+    height:60px;
+    list-style: none;
+    display: flex ;
+    text-decoration: none;
+    justify-content: space-around;
+    align-items:center;
+    margin-right:30px;
+
+    
+}

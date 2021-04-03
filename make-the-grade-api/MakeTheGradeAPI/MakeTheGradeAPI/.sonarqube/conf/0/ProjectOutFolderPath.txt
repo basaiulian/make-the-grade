@@ -1,0 +1,1 @@
+D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPI\MakeTheGradeAPI\.sonarqube\out\0
