@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Get_Results</title>
+    </head>
+
+<body>
+    <link rel="shortcut icon" href="http://example.com/myicon.ico" />
+    <h1
+        style="display:block; text-align: center; margin-top: 40px; margin-bottom: 8px; font-family: 'Montserrat';font-size: 40px;">
+        Welcome to /get_results</h1>
+    <button style="display:block;
+    border-radius: 4px;
+    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 22px;
+    padding: 16px;
+    width: 200px;
+    transition: all 0.4s;
+    cursor: pointer;
+    margin:0 auto;
+    margin-bottom: 30px;
+    transition: all 0.3s ease 0s;" id="req" onclick="sendReq()"><span
+            style="font-family: 'Montserrat'; font-weight: bold;">Request</span></button>
+    <img id="main-image" style="display:block; margin:0 auto;" src="" alt="main image" />
+
+    <script>
+        function sendReq() {
+            let xhr = new XMLHttpRequest();
+
+            function event_function() {
+                if (xhr.readyState === 4) {
+                    document.body.innerHTML = '';
+                    document.write(xhr.responseText);
+                    xhr.removeEventListener("readystatechange", event_function);
+                }
+            }
+
+            xhr.addEventListener("readystatechange", event_function);
+
+            xhr.open("GET", "http://127.0.0.1:3000", true);
+            xhr.send();
+
+        }
+    </script>
+</body>
+
+</html>
