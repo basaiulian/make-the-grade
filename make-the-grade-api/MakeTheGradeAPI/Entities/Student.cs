@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MakeTheGradeAPI.Entities
 {
     public class Student
     {
-        [Column("id", TypeName = "int")]
+        [Column("id", TypeName = "INTEGER")]
         public int Id { get; set; }
 
         [Column("username", TypeName = "string")]

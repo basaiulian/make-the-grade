@@ -1,29 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakeTheGradeAPI.Entities
 {
-    public class MultipleChoiceTest : Test
+    public class MultipleChoiceTest
     {
+        [Column("id", TypeName = "INTEGER")]
+        public int Id { get; set; }
+
+        [Column("question", TypeName = "string")]
+        public string Question { get; set; }
+
+        [Column("grader_id", TypeName = "int")]
+        public int Grader { get; set; }
+
+        [Column("possibleAnswers", TypeName = "string")]
+        public string PossibleAnswers { get; set; }
+        [Column("correctAnswer", TypeName = "string")]
+        public string CorrectAnswer { get; set; }
+
         public MultipleChoiceTest()
         {
-
         }
-        public MultipleChoiceTest(int id, string question, Grader grader, List<string> possibleAnswers, string correctAnswer)
+        public MultipleChoiceTest(int id, string question, string possibleAnswers, string correctAnswer)
         {
             this.Id = id;
             this.Question = question;
-            this.Assigner = grader;
             this.PossibleAnswers = possibleAnswers;
             this.CorrectAnswer = correctAnswer;
         }
 
-        [NotMapped]
-        public List<string> PossibleAnswers { get; set; }
-
-        public string CorrectAnswer { get; set; }
+        
     }
 }
