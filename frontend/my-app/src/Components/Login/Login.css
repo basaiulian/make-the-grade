@@ -1,0 +1,54 @@
+#header {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 8px;
+    font-family: "Montserrat";
+    font-size: 20px;
+
+
+}
+
+#submitLogin {
+    border-radius: 4px;
+    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 22px;
+    padding: 16px;
+    width: 50%;
+    transition: all 0.4s;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.3s ease 0s;
+
+}
+
+span {
+    font-family: "Montserrat";
+    margin-left: 15px;
+    
+}
+
+.separator {
+    display: inline;
+    float: left;
+    margin-bottom: 20px;
+}
+
+#separator2{
+    margin-bottom: 30px;
+}
+#loginForm {
+    width: 350px;
+    margin: auto;
+    display: block;
+    box-shadow: 0 0 10px;
+}
+input{
+    border:none;
+    border-bottom:1px grey solid;
+    height:20px;
+
+}
