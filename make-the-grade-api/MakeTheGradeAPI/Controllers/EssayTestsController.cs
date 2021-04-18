@@ -30,10 +30,26 @@ namespace MakeTheGradeAPI.Controllers
             return _context.EssayTest.ToList();
         }
 
+        [HttpGet("random")]
+        public ActionResult<EssayTest> GetRandomTest()
+        {
+            return _context.EssayTest.Find(1);
+        }
+
         [HttpGet("{Id}")]
         public ActionResult<EssayTest> GetEssayTestById(int Id)
         {
             return _context.EssayTest.Find(Id);
+        }
+
+        [HttpPut("{Id}")]
+        public async Task<ActionResult<string>> setEssayTestText([FromBody] EssayTestAnswer essayTestAnswer, int Id)
+        {
+            EssayTest EssayTestToUpdate = _context.EssayTest.Find(essayTestAnswer.Id);
+            EssayTestToUpdate.EssayText = essayTestAnswer.EssayTestText;
+            _context.Entry(EssayTestToUpdate).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return "Essay text added.";
         }
 
         [HttpPost]
@@ -45,32 +61,32 @@ namespace MakeTheGradeAPI.Controllers
             return CreatedAtAction("GetEssayTestById", new { id = essayTest.Id }, essayTest);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult<EssayTest>> EditEssayTest([FromBody] EssayTest essayTest, int Id)
-        {
-            if (Id != essayTest.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{Id}")]
+        //public async Task<ActionResult<EssayTest>> EditEssayTest([FromBody] EssayTest essayTest, int Id)
+        //{
+        //    if (Id != essayTest.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(essayTest).State = EntityState.Modified;
+        //    _context.Entry(essayTest).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-                return CreatedAtAction("GetEssayTestById", new { id = essayTest.Id }, essayTest);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EssayTestExists(Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //        return CreatedAtAction("GetEssayTestById", new { id = essayTest.Id }, essayTest);
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!EssayTestExists(Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //}
     }
 }

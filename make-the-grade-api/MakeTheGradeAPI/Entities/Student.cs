@@ -39,26 +39,5 @@ namespace MakeTheGradeAPI.Entities
 
         [Column("nr_matricol", TypeName = "string")]
         public string NumarMatricol { get; set; }
-
-        public ICollection<MultipleChoiceTest> SubmitedMultipleChoiceTests { get; set; } = new List<MultipleChoiceTest>();
-
-        public ICollection<ShortAnswerTest> SubmitedShortAnswerTests { get; set; } = new List<ShortAnswerTest>();
-
-        public ICollection<EssayTest> SubmitedEssayTests { get; set; } = new List<EssayTest>();
-
-        void AddMultipleChoiceTest(MultipleChoiceTest test)
-        {
-            SubmitedMultipleChoiceTests.Add(test);
-        }
-
-        void AddShortAnswerTest(ShortAnswerTest test)
-        {
-            SubmitedShortAnswerTests.Add(test);
-        }
-
-        void AddEssayTest(EssayTest test)
-        {
-            SubmitedEssayTests.Add(test);
-        }
     }
 }

@@ -24,6 +24,29 @@ namespace MakeTheGradeAPI.Controllers
             return _context.ShortAnswerTest.Any(e => e.Id == id);
         }
 
+        //public void randomHalfSizeList()
+        //{
+        //    var random = new Random();
+        //    List<int> list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        //    List<int> listCopy = list;
+        //    List<int> result = new List<int>();
+        //    while (result.Count < list.Count)
+        //    {
+        //        int randomElement = listCopy[random.Next(listCopy.Count)];
+        //        result.Add(randomElement);
+        //        listCopy.Remove(randomElement);
+        //    }
+        //}
+
+        [HttpGet("random")]
+        public ActionResult<List<ShortAnswerTest>> GetRandomTest()
+        {
+            ShortAnswerTest ShortAnswerTest1 = _context.ShortAnswerTest.Find(1);
+            ShortAnswerTest ShortAnswerTest2 = _context.ShortAnswerTest.Find(2);
+
+            return new List<ShortAnswerTest> { ShortAnswerTest1, ShortAnswerTest2 };
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<ShortAnswerTest>> GetShortAnswerTests()
         {
@@ -46,32 +69,20 @@ namespace MakeTheGradeAPI.Controllers
             return CreatedAtAction("GetShortAnswerTestById", new { id = shortAnswerTest.Id }, shortAnswerTest);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult<ShortAnswerTest>> EditShortAnswerTest([FromBody] ShortAnswerTest shortAnswerTest, int Id)
+        [HttpPut]
+        public async Task<ActionResult<string>> EditShortAnswerTest([FromBody] List<ShortAnswer> shortAnswerTests)
         {
-            if (Id != shortAnswerTest.Id)
+            foreach (ShortAnswer shortAnswer in shortAnswerTests)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(shortAnswerTest).State = EntityState.Modified;
-
-            try
-            {
+                System.Console.WriteLine(shortAnswer.Id);
+                ShortAnswerTest shortAnswerTest = _context.ShortAnswerTest.Find(shortAnswer.Id);
+                shortAnswerTest.Answer = shortAnswer.ShortAnswerText;
+                _context.Entry(shortAnswerTest).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetShortAnswerTestById", new { id = shortAnswerTest.Id }, shortAnswerTest);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShortAnswerTestExists(Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return "ShortAnswerText added.";
         }
     }
+
+
 }

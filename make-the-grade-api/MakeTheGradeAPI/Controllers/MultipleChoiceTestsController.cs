@@ -2,6 +2,7 @@
 using MakeTheGradeAPI.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,5 +73,63 @@ namespace MakeTheGradeAPI.Controllers
                 }
             }
         }
+
+        [HttpPost("validate")]
+        public ActionResult<List<QuestionValidation>> validateUserAnswer([FromBody] List<MultipleChoiceTestAnswer> multipleChoiceTestAnswers)
+        {
+            List<QuestionValidation> QuestionsValidations = new List<QuestionValidation>();
+            foreach (MultipleChoiceTestAnswer answer in multipleChoiceTestAnswers)
+            {
+                int QuestionId = answer.QuestionId;
+                List<string> UserAnswers = answer.UserAnswers;
+                List<string> CorrectAnswers = new List<string>();
+                List<string> WrongAnswers = new List<string>();
+                List<string> CorrectButNotCheckedAnswers = new List<string>();
+
+                System.Console.WriteLine(QuestionId);
+
+                foreach (string _answer in UserAnswers)
+                {
+                    System.Console.WriteLine(_answer);
+                }
+
+                MultipleChoiceTest MultipleChoiceTestToValidate = _context.MultipleChoiceTest.Find(QuestionId);
+
+                if (MultipleChoiceTestToValidate != null)
+                {
+                    List<string> TestAnswers = MultipleChoiceTestToValidate.PossibleAnswers.Split(',').ToList();
+                    List<string> TestCorrectAnswers = MultipleChoiceTestToValidate.CorrectAnswers.Split(',').ToList();
+
+                    System.Console.WriteLine("raspasuf0ijgasoigjsaoigjas");
+
+                    foreach (string _answer in UserAnswers)
+                    {
+                        if (TestCorrectAnswers.Contains(_answer))
+                        {
+                            CorrectAnswers.Add(_answer);
+                        }
+                        else
+                        {
+                            WrongAnswers.Add(_answer);
+                        }
+                    }
+
+                    foreach (string _answer in TestCorrectAnswers)
+                    {
+                        if (!UserAnswers.Contains(_answer))
+                        {
+                            CorrectButNotCheckedAnswers.Add(_answer);
+                        }
+                    }
+
+                    double Score = CorrectAnswers.Count / TestAnswers.Count;
+                    QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers, Score));
+                }
+            }
+            return QuestionsValidations;
+
+        }
     }
 }
+
+

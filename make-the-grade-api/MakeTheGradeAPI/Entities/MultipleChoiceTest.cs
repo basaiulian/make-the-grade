@@ -13,20 +13,19 @@ namespace MakeTheGradeAPI.Entities
         [Column("grader_id", TypeName = "int")]
         public int Grader { get; set; }
 
-        [Column("possibleAnswers", TypeName = "string")]
+        [Column("possibleAnswers", TypeName = "string")] // string-uri despartite prin virgula
         public string PossibleAnswers { get; set; }
-        [Column("correctAnswer", TypeName = "string")]
-        public string CorrectAnswer { get; set; }
+        [Column("correctAnswers", TypeName = "string")] // string-uri despartite prin virgula
+        public string CorrectAnswers { get; set; }
 
         public MultipleChoiceTest()
         {
         }
-        public MultipleChoiceTest(int id, string question, string possibleAnswers, string correctAnswer)
+        public MultipleChoiceTest(int id, string question, string possibleAnswers, string correctAnswers)
         {
             this.Id = id;
             this.Question = question;
             this.PossibleAnswers = possibleAnswers;
-            this.CorrectAnswer = correctAnswer;
         }
 
         
