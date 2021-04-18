@@ -9,7 +9,7 @@ import {
 import "./NavbarProfile.css"
 import fakeAuth from "../../FakeAuth"
 import logo from "./LogoB.png"
-
+import { useAuth } from "../../Auth";
 const Navbar = () => {
 
     
@@ -24,9 +24,10 @@ const Navbar = () => {
       setRedirectToReferrer(false)
     })
   
-   if (redirectToReferrer === false) {
-     return <Redirect to='/' />
-   }
+     const { setAuthTokens } = useAuth();
+  function logOut() {
+    setAuthTokens("");
+  }
 
 
 
@@ -59,7 +60,7 @@ const Navbar = () => {
             
         </div>
         <div class="navbar-nav ml-auto">
-        <button style={{marginLeft:"10px"}} onClick={loginOut} className="btn btn-outline-primary">Logout</button>
+        <button style={{marginLeft:"10px"}} onClick={logOut} className="btn btn-outline-primary">Logout</button>
         </div>
     </div>
 </nav>

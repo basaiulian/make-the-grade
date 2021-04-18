@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,6 +19,7 @@ import fakeAuth from "./FakeAuth";
 import SeeTests from "./Components/Tests/Avalabile";
 import EssayTest from "./Components/MakeTest/Eassay";
 import ThinkWords from "./Components/MakeTest/ThinkWords";
+import { AuthContext } from "./Auth";
 function App() {
   const loggedIn = localStorage.getItem("logged");
 
@@ -27,14 +28,21 @@ function App() {
 
   console.log(fakeAuth.isAuthenticated);
 
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+  
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+    console.log(authTokens)
+  }
   return (
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
     <div className="App">
       <Router>
-        <Route exact path="/">
-          <Home />
-        </Route>
+      {/* <PublicRoute path="/" component={Home} /> */}
 
-        <Switch>
+         <PublicRoute exact path="/" component={Home} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/login" component={Login} />
 
@@ -46,9 +54,10 @@ function App() {
 
           <PrivateRoute path="/dotest" component={SeeTests} />
           <PrivateRoute path="/word" component={ThinkWords} />
-        </Switch>
+      
       </Router>
     </div>
+    </AuthContext.Provider>
   );
 }
 

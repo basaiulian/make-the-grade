@@ -1,3 +1,11 @@
 .control-label {
     margin-bottom: 20px;
 }
+
+.border-normal{
+    color: red;
+}
+
+.border-correct{
+    color: green;
+}

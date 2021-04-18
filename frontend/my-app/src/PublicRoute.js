@@ -1,13 +1,22 @@
-import React from 'react'
-import fakeAuth from "./FakeAuth"
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { useAuth } from "./Auth";
+/* eslint-disable */
+function PrivateRoute({ component: Component, ...rest }) {
+    const { authTokens } = useAuth();
 
-const PublicRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      fakeAuth.isAuthenticated === false
-        ? <Component {...props} /> 
-        : <Redirect to='/profile' />
-    )} />
-  )
-
-export default PublicRoute
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          !authTokens ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/profile" />
+          )
+        }
+      />
+    );
+}
+/* eslint-disable */
+export default PrivateRoute;

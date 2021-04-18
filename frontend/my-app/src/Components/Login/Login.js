@@ -3,12 +3,13 @@ import "./Login.css";
 import  { Redirect , Link, Route} from 'react-router-dom'
 import Navbar from "../Navbar/Navbar"
 import fakeAuth from "../../FakeAuth"
-
+import { useAuth } from "../../Auth";
 function Login() {
 
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
-    const [isLogged,setLoggedin] = useState(0)
+    const [isLogged,setLoggedin] = useState(false)
+    const { setAuthTokens } = useAuth();
     function handleEvent(e){
         if(e.target.id === "password")
             setPassword(e.target.value)
@@ -23,8 +24,9 @@ function Login() {
 
         if(password !="" && username!="" ){
             setLoggedin(1);
-            localStorage.setItem('logged', username);
-            login()
+            setAuthTokens("TOKEN")
+            // localStorage.setItem('logged', username);
+       
         }
       
        
@@ -39,9 +41,12 @@ function Login() {
         setRedirectToReferrer(true)
       })
     
-     if (redirectToReferrer === true) {
-       return <Redirect to='/profile' />
-     }
+      if (isLogged) {
+        console.log(isLogged)
+        console.log("TOKEN LOGAT ?")
+        console.log(localStorage.getItem('tokens'))
+        return <Redirect to="/profile" />;
+      }
 
     return (
         <>
