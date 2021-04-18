@@ -2,16 +2,16 @@
 <ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
   <ProjectName>MakeTheGradeAPI</ProjectName>
   <ProjectLanguage>C#</ProjectLanguage>
-  <ProjectType>Product</ProjectType>
-  <ProjectGuid>e32eee7a-2d14-4c9f-bf58-9de2465defe0</ProjectGuid>
+  <ProjectType>Test</ProjectType>
+  <ProjectGuid>8b205615-ce08-43bb-ab6d-75d9a371b833</ProjectGuid>
   <FullPath>D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\MakeTheGradeAPI.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResults>
-    <AnalysisResult Id="FilesToAnalyze" Location="D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\.sonarqube\conf\0\FilesToAnalyze.txt" />
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\.sonarqube\conf\2\FilesToAnalyze.txt" />
   </AnalysisResults>
   <AnalysisSettings>
     <Property Name="sonar.cs.roslyn.reportFilePaths">D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\bin\Debug\net5.0\MakeTheGradeAPI.dll.RoslynCA.json</Property>
-    <Property Name="sonar.cs.analyzer.projectOutPaths">D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\.sonarqube\out\0</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\.sonarqube\out\2</Property>
   </AnalysisSettings>
   <Configuration>Debug</Configuration>
   <Platform>AnyCPU</Platform>

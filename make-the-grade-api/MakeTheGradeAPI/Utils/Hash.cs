@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MakeTheGradeAPI.Utils
 {
-    public class Hash
+    public static class Hash
     {
         public static string hashPassword(string password)
         {

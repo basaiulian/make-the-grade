@@ -1,7 +1,9 @@
 ﻿using MakeTheGradeAPI.Entities;
 using MakeTheGradeAPI.Model;
+using MakeTheGradeAPI.Utils.ShortAnswerTests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,32 +21,11 @@ namespace MakeTheGradeAPI.Controllers
             _context = context;
         }
 
-        private bool ShortAnswerTestExists(int id)
+        [HttpGet("random/{numberOfQuestions}")]
+        public ActionResult<List<ShortAnswerTest>> GetRandomTest(int numberOfQuestions)
         {
-            return _context.ShortAnswerTest.Any(e => e.Id == id);
-        }
-
-        //public void randomHalfSizeList()
-        //{
-        //    var random = new Random();
-        //    List<int> list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        //    List<int> listCopy = list;
-        //    List<int> result = new List<int>();
-        //    while (result.Count < list.Count)
-        //    {
-        //        int randomElement = listCopy[random.Next(listCopy.Count)];
-        //        result.Add(randomElement);
-        //        listCopy.Remove(randomElement);
-        //    }
-        //}
-
-        [HttpGet("random")]
-        public ActionResult<List<ShortAnswerTest>> GetRandomTest()
-        {
-            ShortAnswerTest ShortAnswerTest1 = _context.ShortAnswerTest.Find(1);
-            ShortAnswerTest ShortAnswerTest2 = _context.ShortAnswerTest.Find(2);
-
-            return new List<ShortAnswerTest> { ShortAnswerTest1, ShortAnswerTest2 };
+            List<ShortAnswerTest> ShortAnswerTests = _context.ShortAnswerTest.ToList();
+            return ShortAnswerTestUtil.getRandomTestsList(numberOfQuestions, ShortAnswerTests);
         }
 
         [HttpGet]

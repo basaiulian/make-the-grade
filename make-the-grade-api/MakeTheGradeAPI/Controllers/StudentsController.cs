@@ -5,6 +5,7 @@ using MakeTheGradeAPI.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MakeTheGradeAPI.Utils.BulkInsert;
 
 namespace MakeTheGradeAPI.Controllers
 {
@@ -20,9 +21,54 @@ namespace MakeTheGradeAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Student>> FindStudents()
+        public ActionResult<IEnumerable<Student>> GetStudents()
         {
             return _context.Student.ToList();
+        }
+
+        [HttpGet("ungraded")]
+        public List<Student> filterUnGradedNotes()
+        {
+            List<Student> studentList = new List<Student>();
+            foreach (Catalog catalog in _context.Catalog)
+            {
+                if (catalog.Grade < 0)
+                {
+                    studentList.Add(_context.Student.Find(catalog.StudentId));
+                }
+            }
+            return studentList;
+        }
+
+        [HttpGet("graded")]
+        public List<Student> FilterGradedNotes()
+        {
+            List<Student> studentList = new List<Student>();
+            foreach (Catalog catalog in _context.Catalog)
+            {
+                if (catalog.Grade > 0)
+                {
+                    studentList.Add(_context.Student.Find(catalog.StudentId));
+                }
+            }
+            return studentList;
+        }
+
+        [HttpPost("bulk")]
+        public async void BulkInsert()
+        {
+            BulkInsert bulkInsert = new BulkInsert();
+
+            for(int i=0; i < 1000; i++)
+            {
+                if (i % 100 == 0)
+                {
+                    System.Console.WriteLine(i);
+                }
+                Student student1 = new Student() { Username = "Student1", Password = "TestDesc3ription3", Email = "3@gmail.com", PhoneNumber = "0755521512", Address = "address1", NumarMatricol = "RO213412" };
+                bulkInsert.insert(student1, _context);
+            }
+            await _context.SaveChangesAsync();
         }
 
         [HttpPost("authenticate")]

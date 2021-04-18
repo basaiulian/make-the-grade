@@ -19,12 +19,5 @@ namespace MakeTheGradeAPI.Entities
         }
 
         public ICollection<Test> GradedTests { get; set; } = new List<Test>();
-
-        void AddTest(Test test)
-        {
-            GradedTests.Add(test);
-        }
-
-
     }
 }

@@ -1,13 +1,17 @@
-ß
+§
+öD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\CatalogController.csutf-8ß
 ùD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\EssayTestsController.csutf-8¢
 òD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\ExamsController.csutf-8∞
 ¶D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\MultipleChoiceTestsController.csutf-8≠
 £D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\ShortAnswerTestsController.csutf-8•
-õD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\StudentsController.csutf-8±
-ßD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Data\Migrations\20210417145512_SixthCreate.csutf-8º
-∞D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Data\Migrations\20210417145512_SixthCreate.Designer.csutf-8±
+õD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\StudentsController.csutf-8•
+õD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Controllers\TeachersController.csutf-8±
+ßD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Data\Migrations\20210418190940_SixthCreate.csutf-8º
+∞D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Data\Migrations\20210418190940_SixthCreate.Designer.csutf-8±
 •D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Data\Migrations\DataContextModelSnapshot.csutf-8ù
-ìD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Administrator.csutf-8ô
+ìD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Administrator.csutf-8ó
+çD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Catalog.csutf-8ñ
+åD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Course.csutf-8ô
 èD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\EssayTest.csutf-8ü
 ïD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\EssayTestAnswer.csutf-8î
 äD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Exam.csutf-8ñ
@@ -17,13 +21,15 @@
 òD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\QuestionValidation.csutf-8õ
 ëD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\ShortAnswer.csutf-8ü
 ïD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\ShortAnswerTest.csutf-8ó
-çD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Student.csutf-8î
+çD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Student.csutf-8ó
+çD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Teacher.csutf-8î
 äD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\Test.csutf-8î
 äD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Entities\User.csutf-8ò
 éD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Model\DataContext.csutf-8é
 ÑD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Program.csutf-8é
 ÑD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Startup.csutf-8õ
-ëD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Utils\AddTestRequest.csutf-8ë
+ëD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Utils\AddTestRequest.csutf-8¢
+òD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Utils\BulkInsert\BulkInsert.csutf-8ë
 áD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Utils\Hash.csutf-8∞
 ¶D:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\Utils\ShortAnswerTest\ShortAnswerTestUtil.csutf-8≈
 πD:\Facultate\Anul III\Semestrul II\[TSPN] Tehnici speciale programare .NET\MakeTheGrade\MakeTheGradeAPIV2\MakeTheGradeAPI\obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.csutf-8∂

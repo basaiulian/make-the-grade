@@ -82,52 +82,31 @@ namespace MakeTheGradeAPI.Controllers
             {
                 int QuestionId = answer.QuestionId;
                 List<string> UserAnswers = answer.UserAnswers;
-                List<string> CorrectAnswers = new List<string>();
+                List<string> CorrectAnswers;
                 List<string> WrongAnswers = new List<string>();
                 List<string> CorrectButNotCheckedAnswers = new List<string>();
-
-                System.Console.WriteLine(QuestionId);
-
-                foreach (string _answer in UserAnswers)
-                {
-                    System.Console.WriteLine(_answer);
-                }
 
                 MultipleChoiceTest MultipleChoiceTestToValidate = _context.MultipleChoiceTest.Find(QuestionId);
 
                 if (MultipleChoiceTestToValidate != null)
                 {
-                    List<string> TestAnswers = MultipleChoiceTestToValidate.PossibleAnswers.Split(',').ToList();
                     List<string> TestCorrectAnswers = MultipleChoiceTestToValidate.CorrectAnswers.Split(',').ToList();
 
-                    System.Console.WriteLine("raspasuf0ijgasoigjsaoigjas");
-
-                    foreach (string _answer in UserAnswers)
+                    if (TestCorrectAnswers == UserAnswers)
                     {
-                        if (TestCorrectAnswers.Contains(_answer))
-                        {
-                            CorrectAnswers.Add(_answer);
-                        }
-                        else
-                        {
-                            WrongAnswers.Add(_answer);
-                        }
+                        CorrectAnswers = UserAnswers;
+                        QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers));
                     }
-
-                    foreach (string _answer in TestCorrectAnswers)
+                    else
                     {
-                        if (!UserAnswers.Contains(_answer))
-                        {
-                            CorrectButNotCheckedAnswers.Add(_answer);
-                        }
+                        CorrectAnswers = TestCorrectAnswers.Intersect(UserAnswers).ToList();
+                        CorrectButNotCheckedAnswers = TestCorrectAnswers.Except(UserAnswers).ToList();
+                        WrongAnswers = UserAnswers.Except(TestCorrectAnswers).ToList();
                     }
-
-                    double Score = CorrectAnswers.Count / TestAnswers.Count;
-                    QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers, Score));
+                    QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers));
                 }
             }
             return QuestionsValidations;
-
         }
     }
 }
