@@ -20,11 +20,11 @@ namespace MakeTheGradeAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("random/{numberOfQuestions}")]
-        public ActionResult<List<ShortAnswerTest>> GetRandomTest(int numberOfQuestions)
+        [HttpGet("random/{NumberOfQuestions}/exam/{ExamId}")]
+        public ActionResult<List<ShortAnswerTest>> GetRandomTest(int ExamId, int NumberOfQuestions)
         {
-            List<ShortAnswerTest> ShortAnswerTests = _context.ShortAnswerTest.ToList();
-            return ShortAnswerTestUtil.getRandomTestsList(numberOfQuestions, ShortAnswerTests);
+            List<ShortAnswerTest> ShortAnswerTests = _context.ShortAnswerTest.Where(s => s.ExamId == ExamId).ToList();
+            return ShortAnswerTestUtil.getRandomTestsList(NumberOfQuestions, ShortAnswerTests);
         }
 
         [HttpPost("register-user-answers")]

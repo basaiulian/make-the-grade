@@ -108,5 +108,22 @@ namespace MakeTheGradeAPI.Controllers
                 return Ok("Student not added.");
             }
         }
+
+        [HttpPost("{StudentId}/pick-exam/{ExamId}")]
+        public ActionResult<Exam> ChooseExam(int StudentId, int ExamId)
+        {
+            Student Student = _context.Student.Find(StudentId);
+            Exam Exam = _context.Exam.Find(ExamId);
+            if(Student != null && Exam != null)
+            {
+                if (Exam.StudentId == -1)
+                {
+                    Exam.StudentId = Student.Id;
+                    _context.SaveChanges();
+                    return Exam;
+                }
+            }
+            return new Exam();
+        }
     }
 }

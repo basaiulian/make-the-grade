@@ -32,6 +32,18 @@ namespace MakeTheGradeAPI.Controllers
             return _context.Exam.Find(Id);
         }
 
+        [HttpGet("not-assigned")]
+        public ActionResult<IEnumerable<Exam>> GetExamsNotAssigned()
+        {
+            return _context.Exam.Where(e => e.StudentId == -1).ToList();
+        }
+
+        [HttpGet("not-assigned/{Id}")]
+        public ActionResult<Exam> GetExamNotAssignedById(int Id)
+        {
+            return _context.Exam.Where(e => e.Id == Id && e.StudentId == -1).Single();
+        }
+
         [HttpPost]
         public async Task<ActionResult<Exam>> AddExam([FromBody] Exam exam)
         {
