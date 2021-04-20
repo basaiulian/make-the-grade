@@ -19,6 +19,7 @@ import fakeAuth from "./FakeAuth";
 import SeeTests from "./Components/Tests/Avalabile";
 import EssayTest from "./Components/MakeTest/Eassay";
 import ThinkWords from "./Components/MakeTest/ThinkWords";
+import Courses from "./Components/Courses/Courses"
 import { AuthContext } from "./Auth";
 function App() {
   const loggedIn = localStorage.getItem("logged");
@@ -53,6 +54,8 @@ function App() {
           <PrivateRoute path="/test" component={TestQuiz} />
 
           <PrivateRoute path="/dotest" component={SeeTests} />
+          <PrivateRoute path="/courses" component={Courses} />
+          
           <PrivateRoute path="/word" component={ThinkWords} />
       
       </Router>

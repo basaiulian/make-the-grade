@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavbarProfile from "../NavbarProfile/NavbarProfile";
 import axios from 'axios'
 import "./DoTest.css"
+import Countdown from 'react-countdown';
 const DoTest = () => {
   const questions = [
     {
@@ -38,6 +39,9 @@ const DoTest = () => {
   const [dataArray, setDataArray] = useState([])
   const [correctAnswers,setCorrectAnswers] = useState([])
 
+
+  const [greenAnswers,setGreenAnswers] = useState([])
+
   function getQuestions() {
 
 
@@ -58,24 +62,71 @@ const DoTest = () => {
 
   }, []);
 
+  const renderResponse = (answer) => {
+    let ok = 0;
+    correctAnswers.map( answerlist => {
+      // console.log(answerlist.correctAnswers)
+      console.log(answer)
+      console.log(answerlist.correctAnswers.includes(answer))
 
-  const checkAnswer = function(answer){
+      if(answerlist.correctAnswers.includes(answer)){
+        // A pus-o el corecta
+        ok = 1
+      }
+      else if (answerlist.correctButNotCheckedAnswers.includes(answer))
+      {  // 
+         ok = 1
+      }
+      else if (answerlist.wrongAnswers.includes(answer))
+      { // A pus-o el gresit
+         ok = 3
+      }
+
+      // console.log("-------------------------------------")
+      // if (answerlist.correctAnswers.includes(answer))
+      // {  console.log("return 1")
+      //     return 1;
+      
+      // } else if (answerlist.wrongAnswers.includes(answer))
+      // {
+      //   console.log("return 2")
+      //     return 2;
+      // }
+    })
+    if (ok == 1)
+    return    <p1 className="border-correct">{answer} </p1>
+    else if (ok == 3)
+    return    <p1 className="border-incorrect">{answer} </p1>
+    else
+    return    <p1 className="border-normal">{answer} </p1>
+   
+    }
+
+  function checkAnswer(answer){
     // else if (correctAnswers[0].correctButNotCheckedAnswers.includes(answer))
     // {
     //     return 2;
 
     // console.log(correctAnswers)
     correctAnswers.map( answerlist => {
-      console.log(answerlist)
-      if (answerlist.correctAnswers.includes(answer))
-      {  console.log("return 1")
-          return 1;
-      
-      } else if (answerlist.wrongAnswers.includes(answer))
-      {
-        console.log("return 2")
-          return 2;
+      // console.log(answerlist.correctAnswers)
+      console.log(answer)
+      console.log(answerlist.correctAnswers.includes(answer))
+
+      if(answerlist.correctAnswers.includes(answer)){
+        console.log("1")
+        return "1"
       }
+      // console.log("-------------------------------------")
+      // if (answerlist.correctAnswers.includes(answer))
+      // {  console.log("return 1")
+      //     return 1;
+      
+      // } else if (answerlist.wrongAnswers.includes(answer))
+      // {
+      //   console.log("return 2")
+      //     return 2;
+      // }
     })
     
 }
@@ -146,21 +197,40 @@ const DoTest = () => {
     // responsesArray.map((item) => console.log(item));
     // console.log("Raspunsurile sunt " + responsesArray )
   }
+
+  const renderer = ({ minutes, seconds, completed }) => {
+    if (completed) {
+      return "GATA"
+    } else {
+      // Render a countdown
+      return (
+        <div >
+          {minutes}:{seconds}
+          </div>
+      );
+    }}
   return (
     <>
       <NavbarProfile />
+
+      <div style={{ marginTop:"2%"}} className="row">
+          <div style={{ marginLeft:"5%", width:"50px", height:"50px", backgroundColor: "skyblue" ,textAlign: "center", borderRadius:"50%",display:"flex", alignItems:"center"}}className="time">
+        < Countdown date={Date.now() + 600000} renderer={renderer}>
+      <h1>GATA</h1>
+    </Countdown>
+    </div>
+    </div>
+
       <div className="container">
 
       
         <h1 fon className="text-center"> Math test</h1>
 
-        { correctAnswers != "" && <p1>{correctAnswers[0].questionId}</p1>}
-        { correctAnswers != "" && <p1>{correctAnswers[0].correctAnswers}</p1>}
+        {/* { correctAnswers != "" && <p1>{correctAnswers[0].questionId}</p1>}
+        { correctAnswers != "" && <p1>{correctAnswers[0].correctAnswers}</p1>} */}
         {/* { correctAnswers != "" && <p1>{correctAnswers[0].correctButNotCheckedAnswers}</p1>}
         { correctAnswers != "" && <p1>{correctAnswers[0].questionScore}</p1>} */}
-         <p1 className="border-normal">
-                                  MAMAIA
-                                  </p1>
+       
         <form>
 
           <div>
@@ -178,9 +248,13 @@ const DoTest = () => {
                               <div class="form-check">
                                 <input id={item.id} onClick={handleChange} class="form-check-input" type="checkbox" value={item2} name={index} id={item.id}></input>
                                 < label class="form-check-label" for="flexRadioDefault1">
-                                  <p1 className={ correctAnswers !=[]  && checkAnswer(item2)==1 ? "border-correct" : "border-normal" }>
-                                  {item2}
-                                  </p1>
+                            
+                                   
+                                    {/* <p1> {correctAnswers !="" && correctAnswers[0].correctAnswers.includes(item2)}</p1> */}
+                                    <p1> {renderResponse(item2)}</p1>
+                              
+                                 
+                                
                                 </label>
                               </div>
                               </div>

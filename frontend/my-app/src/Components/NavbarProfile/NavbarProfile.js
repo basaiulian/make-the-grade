@@ -36,15 +36,18 @@ const Navbar = () => {
           <div style={{marginBottom:"50px"}}className="row">
           <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a style={{marginLeft:"25px"}} href="#" class="navbar-brand">
-        <img src={logo} height="55" alt="CoolBrand"></img>
-      <a style={{fontSize:"35px" , fontFamily:"monospace"}}>  Online Testing</a>
+        <img src={logo} height="45" alt="CoolBrand"></img>
+      
     </a>
+    <div>
+      <a style={{fontSize:"25px" , fontFamily:"monospace"}}>  Online Testing</a>
+      </div>
  
 
     <div style={{  justifyContent: "flex-end"}} class="collapse navbar-collapse" id="navbarCollapse">
         <div class="row">
         <div class="col">
-        <Link to="/dotest">Tests</Link>
+        <Link to="/courses">Courses</Link>
           </div>
           
           <div class="col">
@@ -55,13 +58,13 @@ const Navbar = () => {
           <Link to="/myteachers">Contacts</Link>
           </div>
           
-            
+          <div class="col">
+           <p  style={{marginRight:"30px", cursor:"pointer"}}  onClick={logOut}>Logout</p>
+          </div>
            
             
         </div>
-        <div class="navbar-nav ml-auto">
-        <button style={{marginLeft:"10px"}} onClick={logOut} className="btn btn-outline-primary">Logout</button>
-        </div>
+    
     </div>
 </nav>
 </div>
