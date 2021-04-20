@@ -1,11 +1,33 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import NavbarProfile from "../NavbarProfile/NavbarProfile"
 import "./Profile.css"
+import axios from 'axios'
 function Profile() {
     const user = localStorage.getItem('logged')
     console.log(user)
     
 
+    const [profileData,setProfileData] = useState("")
+    useEffect(() => {
+        getProfileData()
+    
+      }, []);
+
+
+      function getProfileData() {
+
+
+        axios.get('http://localhost:5000/v1/students/'+user)
+          .then((response) => {
+    
+     
+            console.log(response.data)
+            setProfileData(response.data)
+            
+    
+          
+          });
+      }
     return (
         <>
             <NavbarProfile/>
@@ -27,7 +49,7 @@ function Profile() {
 
             <div class="col-lg-8 col-md-7">
                 <div class="team-single-text padding-50px-left sm-no-padding-left">
-                    <h4 style={{ fontFamily:"-webkit-pictograph"}}class="font-size38 sm-font-size32 xs-font-size30"> Hello,{user} !</h4>
+                    <h4 style={{ fontFamily:"-webkit-pictograph"}}class="font-size38 sm-font-size32 xs-font-size30"> Hello,{profileData.username} !</h4>
      
                     <div class="contact-info-section margin-40px-tb">
                         <ul class="list-style9 no-margin">
@@ -52,10 +74,10 @@ function Profile() {
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fa fa-heart text-lightred"></i>
-                                        <strong class="margin-10px-left text-lightred">Preferences:</strong>
+                                        <strong class="margin-10px-left text-lightred">Registration number:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>Math , IT</p>
+                                        <p>{profileData.numarMatricol}</p>
                                     </div>
                                 </div>
 
@@ -68,7 +90,7 @@ function Profile() {
                                         <strong class="margin-10px-left text-green">Address:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>Bucharest,Romania</p>
+                                        <p>{profileData.address}</p>
                                     </div>
                                 </div>
 
@@ -81,7 +103,8 @@ function Profile() {
                                         <strong class="margin-10px-left xs-margin-four-left text-purple">Phone:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>(+740) 123 456 789</p>
+                                        <p>{profileData.phoneNumber}</p>
+                                        {/* (+740) 123 456 789 */}
                                     </div>
                                 </div>
 
@@ -93,7 +116,7 @@ function Profile() {
                                         <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p><a href="javascript:void(0)">username1@gmail.com</a></p>
+                                        <p><a href="javascript:void(0)">{profileData.email}</a></p>
                                     </div>
                                 </div>
                             </li>

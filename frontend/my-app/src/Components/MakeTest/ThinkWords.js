@@ -1,50 +1,78 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
-
+import Countdown from 'react-countdown';
 const ThinkWords = () => {
 
 
   const [questionsArray,setQuestionsArray] = useState([])
-  const [responseData,setResponseData] = useState("")
+  const [responseData,setResponseData] = useState([])
   useEffect(() => {
     getWords()
 
   }, []);
 
   function handleSubmit(){
-    console.log(questionsArray)
-
-    questionsArray.map( item => console.log(item.Id))
+    // console.log(questionsArray)
+    console.log(responseData)
+    // questionsArray.map( item => console.log(item.Id))
   }
 
   function handleChange(e){
-    console.log(e.target.value)
-    console.log(e.target.id)
-    console.log(e.target.name)
-
+  
+ 
     const questionNumber = e.target.id;
     const questionId= e.target.name;
     const questionValue = e.target.value;
 
-    const questionDetails = { QuestionId: questionNumber, UserAnswers: [] };
+    const questionDetails = { QuestionId: questionNumber, UserAnswers: [ { InputId : questionId, Value: questionValue}] };
 
-    const questionId2 = responseData.filter(
+    console.log(questionDetails)
+
+    console.log("numarul intrebarii" + questionNumber)
+   console.log(" id input " + questionId)
+   console.log(" valoare input " + questionValue)
+   console.log(questionNumber)
+   console.log(responseData)
+    const questionIdFind = responseData.filter(
       (question) => question.QuestionId == questionNumber
     );
-
-    if (questionId.length == 0) {
+    let ok = 0
+    console.log("S-a gasit intrebarea?")
+    console.log(questionIdFind.length)
+    if (questionIdFind.length == 0) {
       const newList = responseData.concat(questionDetails);
       setResponseData(newList);
     } else {
       const updateArray = responseData;
+      updateArray.map( item => {
+        ok = 0
+        if (item.QuestionId == questionNumber){
 
+          let index = item.UserAnswers.findIndex(item2 => item2.InputId == questionId)
+          if (index != - 1) 
+            item.UserAnswers[index].Value = questionValue
+          else
+            item.UserAnswers = item.UserAnswers.concat({ InputId : questionId, Value: questionValue})
+       
+              
+               }
+
+
+              // if(ok == 1)
+              //   item.UserAnswers = item.UserAnswers.concat({ InputId : questionId, Value: questionValue})
+
+       
+      })
+    
+      setResponseData(updateArray)
     }
   }
+
 
   function getWords() {
 
 
-    axios.get('http://localhost:5000/v1/short-answer-tests/random')
+    axios.get('http://localhost:5000/v1/short-answer-tests/random/2')
       .then((response) => {
 
  
@@ -80,7 +108,9 @@ const ThinkWords = () => {
   }
     return (
         <>
-        
+           <Countdown date={Date.now() + 5000}>
+      <h1>GATA</h1>
+    </Countdown>
         <h4>{questionsArray[0] == undefined ? "None" : questionsArray[0].ShortAnswerText[0]}</h4>
 
        
@@ -91,7 +121,16 @@ const ThinkWords = () => {
            <h1>{item.Id}</h1>
            <div style={{display:'flex'}} >
            {item.ShortAnswerText.map((item2,index) => 
-          <p> {item2}     <input name={index+1} id={item.Id}onChange={handleChange} type="text"  /></p>
+           {if(item.ShortAnswerText.length-1 > index)
+             return (
+               <p> {  item2} <input name={index+1} id={item.Id} onChange={handleChange} type="text"  /></p>
+          )
+        else{
+          return ( <p> {  item2}</p>)
+        }}
+          
+         
+      
           // {index}   {item.ShortAnswerText.length-1}
           //  {item.ShortAnswerText.length != index &&    <p> {item2}  {index}       <input type="text"  /></p>}
              

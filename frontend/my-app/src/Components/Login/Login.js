@@ -4,6 +4,7 @@ import  { Redirect , Link, Route} from 'react-router-dom'
 import Navbar from "../Navbar/Navbar"
 import fakeAuth from "../../FakeAuth"
 import { useAuth } from "../../Auth";
+import axios from 'axios'
 function Login() {
 
     const [username,setUsername] = useState("")
@@ -22,12 +23,25 @@ function Login() {
         event.preventDefault();
         console.log("REQUEST");
 
-        if(password !="" && username!="" ){
-            setLoggedin(1);
-            setAuthTokens("TOKEN")
-            // localStorage.setItem('logged', username);
+        axios.post('http://localhost:5000/v1/students/authenticate',[username,password])
+        .then((response) => {
+    
+          console.log(response.data)
+          console.log("===================")
+          localStorage.setItem("logged",response.data);
+        
+          setLoggedin(1);
+          setAuthTokens("TOKEN")
+           
+    
+        });
+
+        // if(password !="" && username!="" ){
+        //     setLoggedin(1);
+        //     setAuthTokens("TOKEN")
+        //     // localStorage.setItem('logged', username);
        
-        }
+        // }
       
        
     }

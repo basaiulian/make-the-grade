@@ -1,5 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react'
 import axios from 'axios'
+import Countdown from 'react-countdown';
+
 const Eassay = () => {
 
     const [essay,setEssay] = useState("")
@@ -28,31 +30,7 @@ const Eassay = () => {
         console.log(essay)
     }
 
-    function verifyTime(){
 
-        const endDate = new Date()
-        setCurrentDate(endDate.getSeconds())
-
-
-    }
-
-    const [time, setTime] = useState(new Date().toLocaleTimeString());
-  const secondsPassed = useRef(0);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const date = new Date()
-      secondsPassed.current = secondsPassed.current + 1;
-      setTime(date.toLocaleTimeString());
-    }, 1000);
-    return () => {
-      clearTimeout(timeout);
-    }
-  }, [time]);
-
-    useEffect(() => {
-        verifyTime()
-      });
 
 
       useEffect(() => {
@@ -83,14 +61,35 @@ const Eassay = () => {
     function handleInput(e){
         setEssay(e.target.value)
     }
+
+    const renderer = ({ minutes, seconds, completed }) => {
+      if (completed) {
+        return "GATA"
+      } else {
+        // Render a countdown
+        return (
+          <div >
+            {minutes}:{seconds}
+            </div>
+        );
+      }}
+
+    
     return (
         <>
+
+        <div style={{ marginTop:"2%"}} className="row">
+          <div style={{ marginLeft:"5%", width:"50px", height:"50px", backgroundColor: "skyblue" ,textAlign: "center", borderRadius:"50%",display:"flex", alignItems:"center"}}className="time">
+        < Countdown date={Date.now() + 600000} renderer={renderer}>
+      <h1>GATA</h1>
+    </Countdown>
+    </div>
+    </div>
+
         <div className="container">
              <form>
 
-<p>Time : {currentDate}</p>
-<div>{time}</div>
-      <div>{secondsPassed.current}</div>
+
 
 <div style={{ textAlign:"center", fontSize:"24px",marginTop:"50px"}}class="form-group">
  { question != "" &&  <label style={{marginBottom:"50px"}} for="exampleFormControlTextarea1"> {question} </label> }

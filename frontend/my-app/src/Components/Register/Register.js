@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import "./Register.css"
 import Navbar from "../Navbar/Navbar"
+import axios from 'axios'
 
 function Register() {
     const [username,setUsername] = useState("")
@@ -10,6 +11,7 @@ function Register() {
     const [email,setEmail] = useState("")
     const [age,setAge] = useState("")
     const [address,setAddress] = useState("")
+    const [phoneNumber,setPhoneNumber] = useState("")
 
     function handleEvent(e){
         if(e.target.id === "password")
@@ -24,6 +26,8 @@ function Register() {
             setEmail(e.target.value)
         else if(e.target.id === "age")
             setAge(e.target.value)
+        else if(e.target.id === "phoneNumber")
+            setPhoneNumber(e.target.value)
         else if(e.target.id === "address")
             setAddress(e.target.value)
             
@@ -39,17 +43,33 @@ function Register() {
         console.log(email)
         console.log(age)
         console.log(address)
+        console.log(phoneNumber)
+
+        axios.post('http://localhost:5000/v1/students',[username,password,email,phoneNumber,address,"19939213312"])
+        .then((response) => {
+    
+          console.log(response.data)
+           
+           
+    
+        });
   
     }
 
     return (
         <>
         <Navbar />
-        <div id="header">
+
+        <div className="container">
+
+
+       
+   
+
             <div className="form-register">
            
             <form onSubmit={submitHandler} id="loginForm">
-            <h1> Register </h1>
+            <h1  style={{ textAlign:"center "}} > Register </h1>
                 <div className="separator">
                     <label for="name"> <span> Username: </span></label>
                     <input onChange={handleEvent} type="text" id="username" />
@@ -62,14 +82,14 @@ function Register() {
                     <label for="password"> <span> ConfirmPas: </span></label>
                     <input onChange={handleEvent} type="text" password="password"  id="password" />
                 </div> */}
-                <div className="separator">
+                {/* <div className="separator">
                     <label for="name"> <span> FirstName: </span></label>
                     <input onChange={handleEvent} type="text" id="firstname" />
                 </div>
                 <div className="separator">
                     <label for="name"> <span> LastName: </span></label>
                     <input onChange={handleEvent} type="text" id="lastname" />
-                </div>
+                </div> */}
               
                 <div className="separator">
                     <label for="name"> <span> Email: </span></label>
@@ -83,13 +103,16 @@ function Register() {
                     <label for="name"> <span> Address: </span></label>
                     <input onChange={handleEvent} type="text" id="address" />
                 </div>
-                <div className="validation">
+                <div className="separator">
+                    <label for="name"> <span> PhoneNumber: </span></label>
+                    <input onChange={handleEvent} type="text" id="phoneNumber" />
+                </div>
+                <div style={{ textAlign:"center "}}className="validation">
                 <button id="submitLogin">Register</button>
                 </div>
             </form>  
             </div>   
-        </div>
-
+            </div>
        </>
     );
 
