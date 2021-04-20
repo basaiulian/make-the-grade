@@ -41,55 +41,40 @@ namespace MakeTheGradeAPI.Controllers
             return CreatedAtAction("GetExamById", new { id = exam.Id }, exam);
         }
 
-        [HttpPut("{Id}/add-multiple-choice")]
-        public async Task<ActionResult<MultipleChoiceTest>> AddMultipleChoiceTest([FromBody] AddTestRequest addTestRequest, int Id)
+        [HttpGet("{Id}/multiple-choice-tests")]
+        public ActionResult<List<MultipleChoiceTest>> GetMultipleChoiceTests(int Id)
         {
-            Exam examToEdit = _context.Exam.Find(Id);
-
-            MultipleChoiceTest multipleChoiceTest = _context.MultipleChoiceTest.Find(addTestRequest.Id);
-
-            if (multipleChoiceTest == null)
+            Exam Exam = _context.Exam.Find(Id);
+            List<MultipleChoiceTest> MultipleChoiceTests = new List<MultipleChoiceTest>();
+            if(Exam != null)
             {
-                return NoContent();
+                MultipleChoiceTests = _context.MultipleChoiceTest.Where(m => m.ExamId == Id).ToList();
             }
-            else
-            {
-                examToEdit.MultipleChoiceTestId = addTestRequest.Id;
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetExamById", new { id = examToEdit.Id }, examToEdit);
-            }
+            return MultipleChoiceTests;
         }
 
-        [HttpPut("{Id}/add-short-answer")]
-        public async Task<ActionResult<Exam>> AddShortAnswerTest([FromBody] AddTestRequest addTestRequest, int Id)
+        [HttpGet("{Id}/short-answer-tests")]
+        public ActionResult<List<ShortAnswerTest>> GetShortAnswerTests(int Id)
         {
-            Exam examToEdit = _context.Exam.Find(Id);
-            Console.WriteLine(examToEdit.Id);
-
-            ShortAnswerTest shortAnswerTest = _context.ShortAnswerTest.Find(addTestRequest.Id);
-
-            if (shortAnswerTest == null)
+            Exam Exam = _context.Exam.Find(Id);
+            List<ShortAnswerTest> ShortAnswerTests = new List<ShortAnswerTest>();
+            if (Exam != null)
             {
-                return NoContent();
+                ShortAnswerTests = _context.ShortAnswerTest.Where(m => m.ExamId == Id).ToList();
             }
-            else
-            {
-                examToEdit.ShortAnswerTestId = addTestRequest.Id;
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetExamById", new { id = examToEdit.Id }, examToEdit);
-            }
+            return ShortAnswerTests;
         }
 
-        [HttpPut("{Id}/add-essay")]
-        public async Task<ActionResult<Exam>> AddEssayTest([FromBody] AddTestRequest addTestRequest, int Id)
+        [HttpGet("{Id}/essay-tests")]
+        public ActionResult<List<EssayTest>> GetEssayTests(int Id)
         {
-            Exam examToEdit = _context.Exam.Find(Id);
-            examToEdit.EssayTestId = addTestRequest.Id;
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetExamById", new { id = examToEdit.Id }, examToEdit);
+            Exam Exam = _context.Exam.Find(Id);
+            List<EssayTest> EssayTests = new List<EssayTest>();
+            if (Exam != null)
+            {
+                EssayTests = _context.EssayTest.Where(m => m.ExamId == Id).ToList();
+            }
+            return EssayTests;
         }
     }
 }

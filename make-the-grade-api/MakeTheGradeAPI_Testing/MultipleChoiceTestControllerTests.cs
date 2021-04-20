@@ -9,8 +9,8 @@ namespace MakeTheGradeAPI_Testing
 {
     public class MultipleChoiceTestControllerTests
     {
-        MultipleChoiceTest multipleChoiceTest1 = new MultipleChoiceTest() {Id = 0, Question = "1+1=?", Grader = 1, PossibleAnswers = "3,4,2,5", CorrectAnswers="2"};
-        MultipleChoiceTest multipleChoiceTest2 = new MultipleChoiceTest() {Id = 1, Question = "5*5=?", Grader = 2, PossibleAnswers = "66,25,12,32", CorrectAnswers="25"};
+        MultipleChoiceTest multipleChoiceTest1 = new MultipleChoiceTest() {Id = 0, Question = "1+1=?", ExamId = 1, PossibleAnswers = "3,4,2,5", CorrectAnswers="2"};
+        MultipleChoiceTest multipleChoiceTest2 = new MultipleChoiceTest() {Id = 1, Question = "5*5=?", ExamId = 2, PossibleAnswers = "66,25,12,32", CorrectAnswers="25"};
         DataContext context;
         Random random;
         ConnectionFactory factory;

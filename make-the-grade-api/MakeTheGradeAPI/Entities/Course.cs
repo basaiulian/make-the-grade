@@ -11,7 +11,7 @@ namespace MakeTheGradeAPI.Entities
         [Column("title", TypeName = "string")]
         public string Title { get; set; }
 
-        [Column("credits", TypeName = "INTEGER")]
+        [Column("credits", TypeName = "int")]
         public string Credits { get; set; }
 
         public List<Student> enrolled_students = new List<Student>();

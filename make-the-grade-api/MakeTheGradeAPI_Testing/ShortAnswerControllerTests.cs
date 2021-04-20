@@ -9,8 +9,8 @@ namespace MakeTheGradeAPI_Testing
 {
     public class ShortAnswerControllerTests
     {
-        ShortAnswerTest shortAnswerTest1 = new ShortAnswerTest() {Question = "This is * first *.", AssignerId = 1, Answer = "This is the first question."};
-        ShortAnswerTest shortAnswerTest2 = new ShortAnswerTest() {Question = "This is a very * question. I love it!", AssignerId = 2, Answer = "This is a very nice question. I love id!"};
+        ShortAnswerTest shortAnswerTest1 = new ShortAnswerTest() {Question = "This is * first *.", ExamId = 1, Answer = "This is the first question."};
+        ShortAnswerTest shortAnswerTest2 = new ShortAnswerTest() {Question = "This is a very * question. I love it!", ExamId = 2, Answer = "This is a very nice question. I love id!"};
         DataContext context;
         Random random;
         ConnectionFactory factory;

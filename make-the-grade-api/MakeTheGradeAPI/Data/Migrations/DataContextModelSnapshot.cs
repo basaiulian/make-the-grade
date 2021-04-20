@@ -51,7 +51,7 @@ namespace MakeTheGradeAPI.Data.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Credits")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("credits");
 
                     b.Property<string>("Title")
@@ -70,13 +70,13 @@ namespace MakeTheGradeAPI.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
-                    b.Property<int>("AssignerId")
-                        .HasColumnType("int")
-                        .HasColumnName("assigner_id");
-
                     b.Property<string>("EssayText")
                         .HasColumnType("string")
                         .HasColumnName("essay_text");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int")
+                        .HasColumnName("exam_id");
 
                     b.Property<string>("Question")
                         .HasColumnType("string")
@@ -94,17 +94,9 @@ namespace MakeTheGradeAPI.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
-                    b.Property<int>("EssayTestId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("essay_test_id");
-
-                    b.Property<int>("MultipleChoiceTestId")
-                        .HasColumnType("int")
-                        .HasColumnName("multiple_choice_id");
-
-                    b.Property<int>("ShortAnswerTestId")
-                        .HasColumnType("int")
-                        .HasColumnName("short_answer_id");
+                        .HasColumnName("course_id");
 
                     b.HasKey("Id");
 
@@ -122,9 +114,9 @@ namespace MakeTheGradeAPI.Data.Migrations
                         .HasColumnType("string")
                         .HasColumnName("correctAnswers");
 
-                    b.Property<int>("Grader")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int")
-                        .HasColumnName("grader_id");
+                        .HasColumnName("exam_id");
 
                     b.Property<string>("PossibleAnswers")
                         .HasColumnType("string")
@@ -150,9 +142,9 @@ namespace MakeTheGradeAPI.Data.Migrations
                         .HasColumnType("string")
                         .HasColumnName("answer");
 
-                    b.Property<int>("AssignerId")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int")
-                        .HasColumnName("assigner_id");
+                        .HasColumnName("exam_id");
 
                     b.Property<string>("Question")
                         .HasColumnType("string")

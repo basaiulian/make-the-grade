@@ -10,8 +10,8 @@ namespace MakeTheGradeAPI.Entities
         [Column("question", TypeName = "string")]
         public string Question { get; set; }
 
-        [Column("assigner_id", TypeName = "int")]
-        public int AssignerId { get; set; }
+        [Column("exam_id", TypeName = "int")]
+        public int ExamId { get; set; }
 
         [Column("essay_text", TypeName = "string")]
         public string EssayText { get; set; }
@@ -20,11 +20,10 @@ namespace MakeTheGradeAPI.Entities
         {
 
         }
-        public EssayTest(int id, string question, int assignerId)
+        public EssayTest(int id, string question)
         {
             this.Id = id;
             this.Question = question;
-            this.AssignerId = assignerId;
         }
 
     }

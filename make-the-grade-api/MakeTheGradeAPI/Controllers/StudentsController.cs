@@ -95,7 +95,7 @@ namespace MakeTheGradeAPI.Controllers
         [HttpPost()]
         public async Task<ActionResult<string>> AddStudent([FromBody] List<string> studentData)
         {
-            Student studentToAdd = new Student(studentData[0], Hash.hashPassword(studentData[1]), studentData[2], "", studentData[3], "");
+            Student studentToAdd = new Student(studentData[0], Hash.hashPassword(studentData[1]), studentData[2], studentData[3], studentData[4], studentData[5]);
 
             _context.Student.Add(studentToAdd);
             await _context.SaveChangesAsync();

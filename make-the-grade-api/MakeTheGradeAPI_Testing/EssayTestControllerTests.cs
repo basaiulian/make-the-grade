@@ -9,8 +9,8 @@ namespace MakeTheGradeAPI_Testing
 {
     public class EssayTestControllerTests
     {
-        EssayTest essayTest1 = new EssayTest() {Question = "Write an essay about your life.", AssignerId = 1, EssayText = "This is the first question."};
-        EssayTest essayTest2 = new EssayTest() {Question = "Write an essay about your holiday.", AssignerId = 2, EssayText = "This is a very nice question. I love id!"};
+        EssayTest essayTest1 = new EssayTest() {Question = "Write an essay about your life.", ExamId = 1, EssayText = "This is the first question."};
+        EssayTest essayTest2 = new EssayTest() {Question = "Write an essay about your holiday.", ExamId = 2, EssayText = "This is a very nice question. I love id!"};
         DataContext context;
         Random random;
         ConnectionFactory factory;

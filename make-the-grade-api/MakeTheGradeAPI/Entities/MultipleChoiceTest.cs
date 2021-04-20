@@ -10,8 +10,8 @@ namespace MakeTheGradeAPI.Entities
         [Column("question", TypeName = "string")]
         public string Question { get; set; }
 
-        [Column("grader_id", TypeName = "int")]
-        public int Grader { get; set; }
+        [Column("exam_id", TypeName = "int")]
+        public int ExamId { get; set; }
 
         [Column("possibleAnswers", TypeName = "string")] // string-uri despartite prin virgula
         public string PossibleAnswers { get; set; }
