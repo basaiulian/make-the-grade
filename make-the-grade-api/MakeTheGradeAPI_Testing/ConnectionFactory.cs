@@ -2,11 +2,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MakeTheGradeAPI_Testing
 {
     public class ConnectionFactory : IDisposable
@@ -15,9 +10,9 @@ namespace MakeTheGradeAPI_Testing
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
-        public DataContext CreateContextForInMemory()
+        public DataContext CreateContextForInMemory(string database)
         {
-            var option = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase(databaseName: "Test_Database").Options;
+            var option = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase(databaseName: database).Options;
 
             var context = new DataContext(option);
             if (context != null)

@@ -15,6 +15,7 @@ namespace MakeTheGradeAPI.Entities
 
         [Column("possibleAnswers", TypeName = "string")] // string-uri despartite prin virgula
         public string PossibleAnswers { get; set; }
+
         [Column("correctAnswers", TypeName = "string")] // string-uri despartite prin virgula
         public string CorrectAnswers { get; set; }
 
@@ -28,6 +29,6 @@ namespace MakeTheGradeAPI.Entities
             this.PossibleAnswers = possibleAnswers;
         }
 
-        
+
     }
 }

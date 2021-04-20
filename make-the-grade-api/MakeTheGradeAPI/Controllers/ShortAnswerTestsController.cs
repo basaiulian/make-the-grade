@@ -3,7 +3,6 @@ using MakeTheGradeAPI.Model;
 using MakeTheGradeAPI.Utils.ShortAnswerTests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +25,24 @@ namespace MakeTheGradeAPI.Controllers
         {
             List<ShortAnswerTest> ShortAnswerTests = _context.ShortAnswerTest.ToList();
             return ShortAnswerTestUtil.getRandomTestsList(numberOfQuestions, ShortAnswerTests);
+        }
+
+        [HttpPost("register-user-answers")]
+        public void RegisterUserAnswers(List<ShortAnswerTestUserAnswer> UserAnswers)
+        {
+            string modified = "";
+            foreach (ShortAnswerTestUserAnswer answer in UserAnswers)
+            {
+                ShortAnswerTest ShortAnswerTestToEdit = _context.ShortAnswerTest.Find(answer.QuestionId);
+                string result = ShortAnswerTestToEdit.Question;
+                foreach (string _answer in answer.UserAnswers)
+                {
+                    int Place = result.IndexOf("*");
+                    result = result.Remove(Place, "*".Length).Insert(Place, _answer);
+                }
+                ShortAnswerTestToEdit.Answer = result;
+                _context.SaveChangesAsync();
+            }
         }
 
         [HttpGet]

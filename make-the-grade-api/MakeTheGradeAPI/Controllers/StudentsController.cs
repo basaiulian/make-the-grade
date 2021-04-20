@@ -26,6 +26,12 @@ namespace MakeTheGradeAPI.Controllers
             return _context.Student.ToList();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Student> GetStudentById(int id)
+        {
+            return _context.Student.Find(id);
+        }
+
         [HttpGet("ungraded")]
         public List<Student> filterUnGradedNotes()
         {
@@ -59,13 +65,13 @@ namespace MakeTheGradeAPI.Controllers
         {
             BulkInsert bulkInsert = new BulkInsert();
 
-            for(int i=0; i < 1000; i++)
+            for(int i=0; i < 10000; i++)
             {
                 if (i % 100 == 0)
                 {
                     System.Console.WriteLine(i);
                 }
-                Student student1 = new Student() { Username = "Student1", Password = "TestDesc3ription3", Email = "3@gmail.com", PhoneNumber = "0755521512", Address = "address1", NumarMatricol = "RO213412" };
+                Student student1 = new Student("Student1", "Password1", "3@gmail.com", "0751251512", "address1", "RO214012");
                 bulkInsert.insert(student1, _context);
             }
             await _context.SaveChangesAsync();

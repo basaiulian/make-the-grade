@@ -20,7 +20,7 @@ namespace MakeTheGradeAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Teacher>> FindTeachers()
+        public ActionResult<IEnumerable<Teacher>> GetTeachers()
         {
             return _context.Teacher.ToList();
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakeTheGradeAPI.Entities
 {
@@ -23,6 +22,9 @@ namespace MakeTheGradeAPI.Entities
         [Column("address", TypeName = "string")]
         public string Address { get; set; }
 
+        [Column("nr_matricol", TypeName = "string")]
+        public string NumarMatricol { get; set; }
+
         public Student()
         {
 
@@ -37,7 +39,6 @@ namespace MakeTheGradeAPI.Entities
             this.NumarMatricol = numarMatricol;
         }
 
-        [Column("nr_matricol", TypeName = "string")]
-        public string NumarMatricol { get; set; }
+        
     }
 }

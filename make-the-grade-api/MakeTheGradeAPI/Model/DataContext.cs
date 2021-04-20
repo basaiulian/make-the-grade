@@ -5,11 +5,9 @@ namespace MakeTheGradeAPI.Model
 {
     public class DataContext : DbContext
     {
-
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
         public DbSet<Exam> Exam { get; set; }
         public DbSet<MultipleChoiceTest> MultipleChoiceTest { get; set; }
         public DbSet<ShortAnswerTest> ShortAnswerTest { get; set; }
