@@ -25,32 +25,32 @@ namespace MakeTheGradeAPI.Controllers
             return _context.Course.ToList();
         }
 
-        [HttpGet("{Id}")]
-        public ActionResult<Course> GetCourseById(int Id)
+        [HttpGet("{id}")]
+        public ActionResult<Course> GetCourseById(int id)
         {
-            return _context.Course.Find(Id);
+            return _context.Course.Find(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Course>> AddCourse([FromBody] Course Course)
+        public async Task<ActionResult<Course>> AddCourse([FromBody] Course course)
         {
-            _context.Course.Add(Course);
+            _context.Course.Add(course);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCourseById", new { id = Course.Id }, Course);
+            return CreatedAtAction("GetCourseById", new { id = course.Id }, course);
         }
 
-        [HttpGet("{Id}/exams")]
-        public async Task<ActionResult<List<Exam>>> GetExams(int Id)
+        [HttpGet("{id}/exams")]
+        public ActionResult<List<Exam>> GetExams(int id)
         {
-            Course Course = _context.Course.Find(Id);
-            List<Exam> CourseExams = new List<Exam>();
-            if(Course != null)
+            Course course = _context.Course.Find(id);
+            List<Exam> courseExams = new();
+            if(course != null)
             {
-                CourseExams = _context.Exam.Where(e => e.CourseId == Id).ToList();
+                courseExams = _context.Exam.Where(e => e.CourseId == id).ToList();
             }
 
-            return CourseExams;
+            return courseExams;
         }
     }
 }

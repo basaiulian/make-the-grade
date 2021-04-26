@@ -14,9 +14,9 @@ namespace MakeTheGradeAPI.Entities
         [Column("credits", TypeName = "int")]
         public string Credits { get; set; }
 
-        public List<Student> enrolled_students = new List<Student>();
+        public List<Student> EnrroledStudents = new();
 
-        public List<Teacher> course_authors = new List<Teacher>();
+        public List<Teacher> CourseAuthors = new();
 
         public Course()
         {

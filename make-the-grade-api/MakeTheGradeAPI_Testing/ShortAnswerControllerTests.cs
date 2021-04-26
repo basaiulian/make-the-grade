@@ -9,18 +9,18 @@ namespace MakeTheGradeAPI_Testing
 {
     public class ShortAnswerControllerTests
     {
-        ShortAnswerTest shortAnswerTest1 = new ShortAnswerTest() {Question = "This is * first *.", ExamId = 1, Answer = "This is the first question."};
-        ShortAnswerTest shortAnswerTest2 = new ShortAnswerTest() {Question = "This is a very * question. I love it!", ExamId = 2, Answer = "This is a very nice question. I love id!"};
-        DataContext context;
-        Random random;
-        ConnectionFactory factory;
-        ShortAnswerTestsController controller;
+        readonly ShortAnswerTest shortAnswerTest1 = new() {Question = "This is * first *.", ExamId = 1, Answer = "This is the first question."};
+        readonly ShortAnswerTest shortAnswerTest2 = new() {Question = "This is a very * question. I love it!", ExamId = 2, Answer = "This is a very nice question. I love id!"};
+        readonly DataContext context;
+        readonly Random random;
+        readonly ConnectionFactory factory;
+        readonly ShortAnswerTestsController controller;
 
         public ShortAnswerControllerTests()
         {
             random = new Random();
             factory = new();
-            context = factory.CreateContextForInMemory("short_answer_database" + random.Next(100000).ToString());
+            context = ConnectionFactory.CreateContextForInMemory("short_answer_database" + random.Next(100000).ToString());
             controller = new ShortAnswerTestsController(context);
         }
 
@@ -31,8 +31,8 @@ namespace MakeTheGradeAPI_Testing
             context.ShortAnswerTest.Add(shortAnswerTest2);
             context.SaveChanges();
 
-            var NumberOfShortAnswerTests = context.ShortAnswerTest.Count();
-            Assert.Equal(2, NumberOfShortAnswerTests);
+            var numberOfShortAnswerTests = context.ShortAnswerTest.Count();
+            Assert.Equal(2, numberOfShortAnswerTests);
 
             var shortAnswerTests = controller.GetShortAnswerTests().Value.ToList();
             Assert.Equal(shortAnswerTest1, shortAnswerTests[0]);
@@ -45,24 +45,24 @@ namespace MakeTheGradeAPI_Testing
             context.ShortAnswerTest.Add(shortAnswerTest1);
             context.SaveChanges();
 
-            var NumberOfShortAnswerTests = context.ShortAnswerTest.Count();
-            Assert.Equal(1, NumberOfShortAnswerTests);
+            var numberOfShortAnswerTests = context.ShortAnswerTest.Count();
+            Assert.Equal(1, numberOfShortAnswerTests);
 
-            var shortAnswerTest = controller.GetShortAnswerTestById(NumberOfShortAnswerTests);
+            var shortAnswerTest = controller.GetShortAnswerTestById(numberOfShortAnswerTests);
             Assert.Equal(shortAnswerTest1, shortAnswerTest.Value);
         }
 
         [Fact]
         public async void AddShortAnswerTest()
         {
-            var AddShortAnswerResult = await controller.AddShortAnswerTest(shortAnswerTest1);
+            await controller.AddShortAnswerTest(shortAnswerTest1);
             context.SaveChanges();
 
-            var NumberOfShortAnswerTests = context.ShortAnswerTest.Count();
+            var numberOfShortAnswerTests = context.ShortAnswerTest.Count();
 
-            var AddedShortAnswerTest = context.ShortAnswerTest.Find(NumberOfShortAnswerTests);
-            Assert.Equal(1, NumberOfShortAnswerTests);
-            Assert.Equal(AddedShortAnswerTest, shortAnswerTest1);
+            var addedShortAnswerTest = context.ShortAnswerTest.Find(numberOfShortAnswerTests);
+            Assert.Equal(1, numberOfShortAnswerTests);
+            Assert.Equal(addedShortAnswerTest, shortAnswerTest1);
         }
 
 

@@ -13,6 +13,8 @@ namespace MakeTheGradeAPI.Controllers
     [Route("/v1/short-answer-tests/")]
     public class ShortAnswerTestsController : ControllerBase
     {
+        private const char Asterix = '*';
+
         private readonly DataContext _context;
 
         public ShortAnswerTestsController(DataContext context)
@@ -20,27 +22,26 @@ namespace MakeTheGradeAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("random/{NumberOfQuestions}/exam/{ExamId}")]
-        public ActionResult<List<ShortAnswerTest>> GetRandomTest(int ExamId, int NumberOfQuestions)
+        [HttpGet("random/{numberOfQuestions}")]
+        public ActionResult<List<ShortAnswerTest>> GetRandomTest(int numberOfQuestions)
         {
-            List<ShortAnswerTest> ShortAnswerTests = _context.ShortAnswerTest.Where(s => s.ExamId == ExamId).ToList();
-            return ShortAnswerTestUtil.getRandomTestsList(NumberOfQuestions, ShortAnswerTests);
+            List<ShortAnswerTest> shortAnswerTests = _context.ShortAnswerTest.ToList();
+            return ShortAnswerTestUtil.GetRandomTestsList(numberOfQuestions, shortAnswerTests);
         }
 
         [HttpPost("register-user-answers")]
-        public void RegisterUserAnswers(List<ShortAnswerTestUserAnswer> UserAnswers)
+        public void RegisterUserAnswers(List<ShortAnswerTestUserAnswer> userAnswers)
         {
-            string modified = "";
-            foreach (ShortAnswerTestUserAnswer answer in UserAnswers)
+            foreach (ShortAnswerTestUserAnswer answer in userAnswers)
             {
-                ShortAnswerTest ShortAnswerTestToEdit = _context.ShortAnswerTest.Find(answer.QuestionId);
-                string result = ShortAnswerTestToEdit.Question;
-                foreach (string _answer in answer.UserAnswers)
+                ShortAnswerTest shortAnswerTestToEdit = _context.ShortAnswerTest.Find(answer.QuestionId);
+                string result = shortAnswerTestToEdit.Question;
+                foreach (string currentAnswer in answer.UserAnswers)
                 {
-                    int Place = result.IndexOf("*");
-                    result = result.Remove(Place, "*".Length).Insert(Place, _answer);
+                    int place = result.IndexOf(Asterix);
+                    result = result.Remove(place, 1).Insert(place, currentAnswer);
                 }
-                ShortAnswerTestToEdit.Answer = result;
+                shortAnswerTestToEdit.Answer = result;
                 _context.SaveChangesAsync();
             }
         }
@@ -51,16 +52,15 @@ namespace MakeTheGradeAPI.Controllers
             return _context.ShortAnswerTest.ToList();
         }
 
-        [HttpGet("{Id}")]
-        public ActionResult<ShortAnswerTest> GetShortAnswerTestById(int Id)
+        [HttpGet("{id}")]
+        public ActionResult<ShortAnswerTest> GetShortAnswerTestById(int id)
         {
-            return _context.ShortAnswerTest.Find(Id);
+            return _context.ShortAnswerTest.Find(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<ShortAnswerTest>> AddShortAnswerTest([FromBody] ShortAnswerTest shortAnswerTest)
         {
-            System.Console.WriteLine(shortAnswerTest.Answer + shortAnswerTest.Question);
             _context.ShortAnswerTest.Add(shortAnswerTest);
             await _context.SaveChangesAsync();
 
@@ -72,7 +72,6 @@ namespace MakeTheGradeAPI.Controllers
         {
             foreach (ShortAnswer shortAnswer in shortAnswerTests)
             {
-                System.Console.WriteLine(shortAnswer.Id);
                 ShortAnswerTest shortAnswerTest = _context.ShortAnswerTest.Find(shortAnswer.Id);
                 shortAnswerTest.Answer = shortAnswer.ShortAnswerText;
                 _context.Entry(shortAnswerTest).State = EntityState.Modified;

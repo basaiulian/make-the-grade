@@ -9,18 +9,18 @@ namespace MakeTheGradeAPI_Testing
 {
     public class EssayTestControllerTests
     {
-        EssayTest essayTest1 = new EssayTest() {Question = "Write an essay about your life.", ExamId = 1, EssayText = "This is the first question."};
-        EssayTest essayTest2 = new EssayTest() {Question = "Write an essay about your holiday.", ExamId = 2, EssayText = "This is a very nice question. I love id!"};
-        DataContext context;
-        Random random;
-        ConnectionFactory factory;
-        EssayTestsController controller;
+        readonly EssayTest essayTest1 = new() {Question = "Write an essay about your life.", ExamId = 1, EssayText = "This is the first question."};
+        readonly EssayTest essayTest2 = new() {Question = "Write an essay about your holiday.", ExamId = 2, EssayText = "This is a very nice question. I love id!"};
+        readonly DataContext context;
+        readonly Random random;
+        readonly ConnectionFactory factory;
+        readonly EssayTestsController controller;
 
         public EssayTestControllerTests()
         {
             random = new Random();
             factory = new();
-            context = factory.CreateContextForInMemory("essay_database" + random.Next(100000).ToString());
+            context = ConnectionFactory.CreateContextForInMemory("essay_database" + random.Next(100000).ToString());
             controller = new EssayTestsController(context);
         }
 
@@ -31,12 +31,12 @@ namespace MakeTheGradeAPI_Testing
             context.EssayTest.Add(essayTest2);
             context.SaveChanges();
 
-            var NumberOfEssayTests = context.EssayTest.Count();
-            Assert.Equal(2, NumberOfEssayTests);
+            var numberOfEssayTests = context.EssayTest.Count();
+            Assert.Equal(2, numberOfEssayTests);
 
-            var EssayTests = controller.GetEssayTests().Value.ToList();
-            Assert.Equal(essayTest1, EssayTests[0]);
-            Assert.Equal(essayTest2, EssayTests[1]);
+            var essayTests = controller.GetEssayTests().Value.ToList();
+            Assert.Equal(essayTest1, essayTests[0]);
+            Assert.Equal(essayTest2, essayTests[1]);
         }
 
         [Fact]
@@ -45,24 +45,24 @@ namespace MakeTheGradeAPI_Testing
             context.EssayTest.Add(essayTest1);
             context.SaveChanges();
 
-            var NumberOfEssayTests = context.EssayTest.Count();
-            Assert.Equal(1, NumberOfEssayTests);
+            var numberOfEssayTests = context.EssayTest.Count();
+            Assert.Equal(1, numberOfEssayTests);
 
-            var essayTest = controller.GetEssayTestById(NumberOfEssayTests);
+            var essayTest = controller.GetEssayTestById(numberOfEssayTests);
             Assert.Equal(essayTest1, essayTest.Value);
         }
 
         [Fact]
         public async void AddEssayTest()
         {
-            var AddEssayTestResult = await controller.AddEssayTest(essayTest2);
+            await controller.AddEssayTest(essayTest2);
             context.SaveChanges();
 
-            var NumberOfEssayTests = context.EssayTest.Count();
+            var numberOfEssayTests = context.EssayTest.Count();
 
-            var AddedEssayTest = context.EssayTest.Find(NumberOfEssayTests);
-            Assert.Equal(1, NumberOfEssayTests);
-            Assert.Equal(AddedEssayTest, essayTest2);
+            var addedEssayTest = context.EssayTest.Find(numberOfEssayTests);
+            Assert.Equal(1, numberOfEssayTests);
+            Assert.Equal(addedEssayTest, essayTest2);
         }
 
 

@@ -23,12 +23,12 @@ namespace MakeTheGradeAPI.Entities
         [Column("address", TypeName = "string")]
         public string Address { get; set; }
 
-        List<Course> courses_list = new List<Course>();
+        public List<Course> Courses = new();
         public Teacher()
         {
 
         }
-        public Teacher(string username, string password, string email, string phoneNumber, string address, string numarMatricol)
+        public Teacher(string username, string password, string email, string phoneNumber, string address)
         {
             this.Username = username;
             this.Password = password;

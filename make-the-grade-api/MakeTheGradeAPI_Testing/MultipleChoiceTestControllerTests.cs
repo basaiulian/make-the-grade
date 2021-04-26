@@ -9,18 +9,18 @@ namespace MakeTheGradeAPI_Testing
 {
     public class MultipleChoiceTestControllerTests
     {
-        MultipleChoiceTest multipleChoiceTest1 = new MultipleChoiceTest() {Id = 0, Question = "1+1=?", ExamId = 1, PossibleAnswers = "3,4,2,5", CorrectAnswers="2"};
-        MultipleChoiceTest multipleChoiceTest2 = new MultipleChoiceTest() {Id = 1, Question = "5*5=?", ExamId = 2, PossibleAnswers = "66,25,12,32", CorrectAnswers="25"};
-        DataContext context;
-        Random random;
-        ConnectionFactory factory;
-        MultipleChoiceTestsController controller;
+        readonly MultipleChoiceTest multipleChoiceTest1 = new() {Id = 0, Question = "1+1=?", ExamId = 1, PossibleAnswers = "3,4,2,5", CorrectAnswers="2"};
+        readonly MultipleChoiceTest multipleChoiceTest2 = new() {Id = 1, Question = "5*5=?", ExamId = 2, PossibleAnswers = "66,25,12,32", CorrectAnswers="25"};
+        readonly DataContext context;
+        readonly Random random;
+        readonly ConnectionFactory factory;
+        readonly MultipleChoiceTestsController controller;
 
         public MultipleChoiceTestControllerTests()
         {
             random = new Random();
             factory = new();
-            context = factory.CreateContextForInMemory("multiple_choice_database" + random.Next(100000).ToString());
+            context = ConnectionFactory.CreateContextForInMemory("multiple_choice_database" + random.Next(100000).ToString());
             controller = new MultipleChoiceTestsController(context);
         }
 
@@ -30,24 +30,24 @@ namespace MakeTheGradeAPI_Testing
             context.MultipleChoiceTest.Add(multipleChoiceTest1);
             context.SaveChanges();
 
-            var NumberOfMultipleChoiceTests = context.MultipleChoiceTest.Count();
-            Assert.Equal(1, NumberOfMultipleChoiceTests);
+            var numberOfMultipleChoiceTests = context.MultipleChoiceTest.Count();
+            Assert.Equal(1, numberOfMultipleChoiceTests);
 
-            var essayTest = controller.GetMultipleChoiceTestById(NumberOfMultipleChoiceTests);
+            var essayTest = controller.GetMultipleChoiceTestById(numberOfMultipleChoiceTests);
             Assert.Equal(multipleChoiceTest1, essayTest.Value);
         }
 
         [Fact]
         public async void AddMultipleChoiceTest()
         {
-            var AddMultipleChoiceTestResult = await controller.AddMultipleChoiceTest(multipleChoiceTest2);
+            await controller.AddMultipleChoiceTest(multipleChoiceTest2);
             context.SaveChanges();
 
-            var NumberOfMultipleChoiceTests = context.MultipleChoiceTest.Count();
+            var numberOfMultipleChoiceTests = context.MultipleChoiceTest.Count();
 
-            var AddedMultipleChoiceTest = context.MultipleChoiceTest.Find(NumberOfMultipleChoiceTests);
-            Assert.Equal(1, NumberOfMultipleChoiceTests);
-            Assert.Equal(AddedMultipleChoiceTest, multipleChoiceTest2);
+            var addedMultipleChoiceTest = context.MultipleChoiceTest.Find(numberOfMultipleChoiceTests);
+            Assert.Equal(1, numberOfMultipleChoiceTests);
+            Assert.Equal(addedMultipleChoiceTest, multipleChoiceTest2);
         }
     }
 }

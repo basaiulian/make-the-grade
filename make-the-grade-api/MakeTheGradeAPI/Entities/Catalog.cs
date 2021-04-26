@@ -23,11 +23,11 @@ namespace MakeTheGradeAPI.Entities
         {
 
         }
-        public Catalog(int student_id, int teacher_id, int exam_id, int grade)
+        public Catalog(int studentId, int teacherId, int examId, int grade)
         {
-            StudentId = student_id;
-            TeacherId = teacher_id;
-            ExamId = exam_id;
+            StudentId = studentId;
+            TeacherId = teacherId;
+            ExamId = examId;
             Grade = grade;
         }
     }

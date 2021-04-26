@@ -33,9 +33,9 @@ namespace MakeTheGradeAPI.Controllers
         }
 
         [HttpGet("ungraded")]
-        public List<Student> filterUnGradedNotes()
+        public List<Student> FilterUnGradedNotes()
         {
-            List<Student> studentList = new List<Student>();
+            List<Student> studentList = new();
             foreach (Catalog catalog in _context.Catalog)
             {
                 if (catalog.Grade < 0)
@@ -49,7 +49,7 @@ namespace MakeTheGradeAPI.Controllers
         [HttpGet("graded")]
         public List<Student> FilterGradedNotes()
         {
-            List<Student> studentList = new List<Student>();
+            List<Student> studentList = new();
             foreach (Catalog catalog in _context.Catalog)
             {
                 if (catalog.Grade > 0)
@@ -60,31 +60,14 @@ namespace MakeTheGradeAPI.Controllers
             return studentList;
         }
 
-        [HttpPost("bulk")]
-        public async void BulkInsert()
-        {
-            BulkInsert bulkInsert = new BulkInsert();
-
-            for(int i=0; i < 10000; i++)
-            {
-                if (i % 100 == 0)
-                {
-                    System.Console.WriteLine(i);
-                }
-                Student student1 = new Student("Student1", "Password1", "3@gmail.com", "0751251512", "address1", "RO214012");
-                bulkInsert.insert(student1, _context);
-            }
-            await _context.SaveChangesAsync();
-        }
-
         [HttpPost("authenticate")]
         public ActionResult<int> Authenticate([FromBody] List<string> studentData)
         {
-            List<Student> Students = _context.Student.ToList();
+            List<Student> students = _context.Student.ToList();
 
-            foreach (Student student in Students)
+            foreach (Student student in students)
             {
-                if (student.Username == studentData[0] && student.Password == Hash.hashPassword(studentData[1]))
+                if (student.Username == studentData[0] && student.Password == Hash.HashPassword(studentData[1]))
                 {
                     return student.Id;
                 }
@@ -95,7 +78,7 @@ namespace MakeTheGradeAPI.Controllers
         [HttpPost()]
         public async Task<ActionResult<string>> AddStudent([FromBody] List<string> studentData)
         {
-            Student studentToAdd = new Student(studentData[0], Hash.hashPassword(studentData[1]), studentData[2], studentData[3], studentData[4], studentData[5]);
+            Student studentToAdd = new(studentData[0], Hash.HashPassword(studentData[1]), studentData[2], studentData[3], studentData[4], studentData[5]);
 
             _context.Student.Add(studentToAdd);
             await _context.SaveChangesAsync();
@@ -107,23 +90,6 @@ namespace MakeTheGradeAPI.Controllers
             {
                 return Ok("Student not added.");
             }
-        }
-
-        [HttpPost("{StudentId}/pick-exam/{ExamId}")]
-        public ActionResult<Exam> ChooseExam(int StudentId, int ExamId)
-        {
-            Student Student = _context.Student.Find(StudentId);
-            Exam Exam = _context.Exam.Find(ExamId);
-            if(Student != null && Exam != null)
-            {
-                if (Exam.StudentId == -1)
-                {
-                    Exam.StudentId = Student.Id;
-                    _context.SaveChanges();
-                    return Exam;
-                }
-            }
-            return new Exam();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace MakeTheGradeAPI.Controllers
     [Route("/v1/multiple-choice-tests/")]
     public class MultipleChoiceTestsController : ControllerBase
     {
+        private const char Comma = ',';
+
         private readonly DataContext _context;
 
         public MultipleChoiceTestsController(DataContext context)
@@ -30,10 +32,10 @@ namespace MakeTheGradeAPI.Controllers
             return _context.MultipleChoiceTest.ToList();
         }
 
-        [HttpGet("{Id}")]
-        public ActionResult<MultipleChoiceTest> GetMultipleChoiceTestById(int Id)
+        [HttpGet("{id}")]
+        public ActionResult<MultipleChoiceTest> GetMultipleChoiceTestById(int id)
         {
-            return _context.MultipleChoiceTest.Find(Id);
+            return _context.MultipleChoiceTest.Find(id);
         }
 
         [HttpPost]
@@ -45,10 +47,10 @@ namespace MakeTheGradeAPI.Controllers
             return CreatedAtAction("GetMultipleChoiceTestById", new { id = multipleChoiceTest.Id }, multipleChoiceTest);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult<MultipleChoiceTest>> EditMultipleChoiceTest([FromBody] MultipleChoiceTest multipleChoiceTest, int Id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<MultipleChoiceTest>> EditMultipleChoiceTest([FromBody] MultipleChoiceTest multipleChoiceTest, int id)
         {
-            if (Id != multipleChoiceTest.Id)
+            if (id != multipleChoiceTest.Id)
             {
                 return BadRequest();
             }
@@ -62,7 +64,7 @@ namespace MakeTheGradeAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MultipleChoiceTestExists(Id))
+                if (!MultipleChoiceTestExists(id))
                 {
                     return NotFound();
                 }
@@ -74,38 +76,38 @@ namespace MakeTheGradeAPI.Controllers
         }
 
         [HttpPost("validate")]
-        public ActionResult<List<QuestionValidation>> validateUserAnswer([FromBody] List<MultipleChoiceTestAnswer> multipleChoiceTestAnswers)
+        public ActionResult<List<QuestionValidation>> ValidateUserAnswer([FromBody] List<MultipleChoiceTestAnswer> multipleChoiceTestAnswers)
         {
-            List<QuestionValidation> QuestionsValidations = new List<QuestionValidation>();
+            List<QuestionValidation> questionsValidations = new();
             foreach (MultipleChoiceTestAnswer answer in multipleChoiceTestAnswers)
             {
-                int QuestionId = answer.QuestionId;
-                List<string> UserAnswers = answer.UserAnswers;
-                List<string> CorrectAnswers;
-                List<string> WrongAnswers = new List<string>();
-                List<string> CorrectButNotCheckedAnswers = new List<string>();
+                int questionId = answer.QuestionId;
+                List<string> userAnswers = answer.UserAnswers;
+                List<string> correctAnswers;
+                List<string> wrongAnswers = new();
+                List<string> correctButNotCheckedAnswers = new();
 
-                MultipleChoiceTest MultipleChoiceTestToValidate = _context.MultipleChoiceTest.Find(QuestionId);
+                MultipleChoiceTest MultipleChoiceTestToValidate = _context.MultipleChoiceTest.Find(questionId);
 
                 if (MultipleChoiceTestToValidate != null)
                 {
-                    List<string> TestCorrectAnswers = MultipleChoiceTestToValidate.CorrectAnswers.Split(',').ToList();
+                    List<string> testCorrectAnswers = MultipleChoiceTestToValidate.CorrectAnswers.Split(Comma).ToList();
 
-                    if (TestCorrectAnswers == UserAnswers)
+                    if (testCorrectAnswers == userAnswers)
                     {
-                        CorrectAnswers = UserAnswers;
-                        QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers));
+                        correctAnswers = userAnswers;
+                        questionsValidations.Add(new QuestionValidation(questionId, correctAnswers, correctButNotCheckedAnswers, wrongAnswers));
                     }
                     else
                     {
-                        CorrectAnswers = TestCorrectAnswers.Intersect(UserAnswers).ToList();
-                        CorrectButNotCheckedAnswers = TestCorrectAnswers.Except(UserAnswers).ToList();
-                        WrongAnswers = UserAnswers.Except(TestCorrectAnswers).ToList();
+                        correctAnswers = testCorrectAnswers.Intersect(userAnswers).ToList();
+                        correctButNotCheckedAnswers = testCorrectAnswers.Except(userAnswers).ToList();
+                        wrongAnswers = userAnswers.Except(testCorrectAnswers).ToList();
                     }
-                    QuestionsValidations.Add(new QuestionValidation(QuestionId, CorrectAnswers, CorrectButNotCheckedAnswers, WrongAnswers));
+                    questionsValidations.Add(new QuestionValidation(questionId, correctAnswers, correctButNotCheckedAnswers, wrongAnswers));
                 }
             }
-            return QuestionsValidations;
+            return questionsValidations;
         }
     }
 }

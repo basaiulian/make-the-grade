@@ -31,18 +31,18 @@ namespace MakeTheGradeAPI.Controllers
             return _context.EssayTest.Find(1);
         }
 
-        [HttpGet("{Id}")]
-        public ActionResult<EssayTest> GetEssayTestById(int Id)
+        [HttpGet("{id}")]
+        public ActionResult<EssayTest> GetEssayTestById(int id)
         {
-            return _context.EssayTest.Find(Id);
+            return _context.EssayTest.Find(id);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult<string>> setEssayTestText([FromBody] EssayTestAnswer essayTestAnswer, int Id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<string>> SetEssayTestText([FromBody] EssayTestAnswer essayTestAnswer, int id)
         {
-            EssayTest EssayTestToUpdate = _context.EssayTest.Find(essayTestAnswer.Id);
-            EssayTestToUpdate.EssayText = essayTestAnswer.EssayTestText;
-            _context.Entry(EssayTestToUpdate).State = EntityState.Modified;
+            EssayTest essayTestToUpdate = _context.EssayTest.Find(id);
+            essayTestToUpdate.EssayText = essayTestAnswer.EssayTestText;
+            _context.Entry(essayTestToUpdate).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return "Essay text added.";
         }

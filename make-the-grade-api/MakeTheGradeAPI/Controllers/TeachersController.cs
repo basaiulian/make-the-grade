@@ -28,11 +28,11 @@ namespace MakeTheGradeAPI.Controllers
         [HttpPost("authenticate")]
         public ActionResult<int> Authenticate([FromBody] List<string> teachersData)
         {
-            List<Teacher> Teachers = _context.Teacher.ToList();
+            List<Teacher> teachers = _context.Teacher.ToList();
 
-            foreach (Teacher teacher in Teachers)
+            foreach (Teacher teacher in teachers)
             {
-                if (teacher.Username == teachersData[0] && teacher.Password == Hash.hashPassword(teachersData[1]))
+                if (teacher.Username == teachersData[0] && teacher.Password == Hash.HashPassword(teachersData[1]))
                 {
                     return teacher.Id;
                 }
@@ -43,7 +43,7 @@ namespace MakeTheGradeAPI.Controllers
         [HttpPost()]
         public async Task<ActionResult<string>> AddTeacher([FromBody] List<string> teachersData)
         {
-            Teacher teacherToAdd = new Teacher(teachersData[0], Hash.hashPassword(teachersData[1]), teachersData[2], "", teachersData[3], "");
+            Teacher teacherToAdd = new(teachersData[0], Hash.HashPassword(teachersData[1]), teachersData[2], "", teachersData[3]);
 
             _context.Teacher.Add(teacherToAdd);
             await _context.SaveChangesAsync();
@@ -61,29 +61,29 @@ namespace MakeTheGradeAPI.Controllers
         [HttpGet("ungraded/{id}")]
         public List<Student> FilterUnGradedNotes(int id)
         {
-            List<Student> studentList = new List<Student>();
+            List<Student> students = new();
             foreach (Catalog catalog in _context.Catalog)
             {
                 if (catalog.Grade < 0 && catalog.TeacherId == id)
                 {
-                    studentList.Add(_context.Student.Find(catalog.StudentId));
+                    students.Add(_context.Student.Find(catalog.StudentId));
                 }
             }
-            return studentList;
+            return students;
         }
 
         [HttpGet("graded/{id}")]
         public List<Student> FilterGradedNotes(int id)
         {
-            List<Student> studentList = new List<Student>();
+            List<Student> students = new();
             foreach (Catalog catalog in _context.Catalog)
             {
                 if (catalog.Grade > 0 && catalog.TeacherId == id)
                 {
-                    studentList.Add(_context.Student.Find(catalog.StudentId));
+                    students.Add(_context.Student.Find(catalog.StudentId));
                 }
             }
-            return studentList;
+            return students;
         }
     }
 }

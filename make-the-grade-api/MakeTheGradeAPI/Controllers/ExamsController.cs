@@ -26,22 +26,10 @@ namespace MakeTheGradeAPI.Controllers
             return _context.Exam.ToList();
         }
 
-        [HttpGet("{Id}")]
-        public ActionResult<Exam> GetExamById(int Id)
+        [HttpGet("{id}")]
+        public ActionResult<Exam> GetExamById(int id)
         {
-            return _context.Exam.Find(Id);
-        }
-
-        [HttpGet("not-assigned")]
-        public ActionResult<IEnumerable<Exam>> GetExamsNotAssigned()
-        {
-            return _context.Exam.Where(e => e.StudentId == -1).ToList();
-        }
-
-        [HttpGet("not-assigned/{Id}")]
-        public ActionResult<Exam> GetExamNotAssignedById(int Id)
-        {
-            return _context.Exam.Where(e => e.Id == Id && e.StudentId == -1).Single();
+            return _context.Exam.Find(id);
         }
 
         [HttpPost]
@@ -53,40 +41,40 @@ namespace MakeTheGradeAPI.Controllers
             return CreatedAtAction("GetExamById", new { id = exam.Id }, exam);
         }
 
-        [HttpGet("{Id}/multiple-choice-tests")]
-        public ActionResult<List<MultipleChoiceTest>> GetMultipleChoiceTests(int Id)
+        [HttpGet("{id}/multiple-choice-tests")]
+        public ActionResult<List<MultipleChoiceTest>> GetMultipleChoiceTests(int id)
         {
-            Exam Exam = _context.Exam.Find(Id);
-            List<MultipleChoiceTest> MultipleChoiceTests = new List<MultipleChoiceTest>();
+            Exam Exam = _context.Exam.Find(id);
+            List<MultipleChoiceTest> MultipleChoiceTests = new();
             if(Exam != null)
             {
-                MultipleChoiceTests = _context.MultipleChoiceTest.Where(m => m.ExamId == Id).ToList();
+                MultipleChoiceTests = _context.MultipleChoiceTest.Where(m => m.ExamId == id).ToList();
             }
             return MultipleChoiceTests;
         }
 
-        [HttpGet("{Id}/short-answer-tests")]
-        public ActionResult<List<ShortAnswerTest>> GetShortAnswerTests(int Id)
+        [HttpGet("{id}/short-answer-tests")]
+        public ActionResult<List<ShortAnswerTest>> GetShortAnswerTests(int id)
         {
-            Exam Exam = _context.Exam.Find(Id);
-            List<ShortAnswerTest> ShortAnswerTests = new List<ShortAnswerTest>();
-            if (Exam != null)
+            Exam exam = _context.Exam.Find(id);
+            List<ShortAnswerTest> shortAnswerTests = new();
+            if (exam != null)
             {
-                ShortAnswerTests = _context.ShortAnswerTest.Where(m => m.ExamId == Id).ToList();
+                shortAnswerTests = _context.ShortAnswerTest.Where(m => m.ExamId == id).ToList();
             }
-            return ShortAnswerTests;
+            return shortAnswerTests;
         }
 
-        [HttpGet("{Id}/essay-tests")]
-        public ActionResult<List<EssayTest>> GetEssayTests(int Id)
+        [HttpGet("{id}/essay-tests")]
+        public ActionResult<List<EssayTest>> GetEssayTests(int id)
         {
-            Exam Exam = _context.Exam.Find(Id);
-            List<EssayTest> EssayTests = new List<EssayTest>();
-            if (Exam != null)
+            Exam exam = _context.Exam.Find(id);
+            List<EssayTest> essayTests = new();
+            if (exam != null)
             {
-                EssayTests = _context.EssayTest.Where(m => m.ExamId == Id).ToList();
+                essayTests = _context.EssayTest.Where(m => m.ExamId == id).ToList();
             }
-            return EssayTests;
+            return essayTests;
         }
     }
 }

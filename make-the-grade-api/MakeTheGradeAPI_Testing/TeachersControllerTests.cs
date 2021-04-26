@@ -10,19 +10,19 @@ namespace MakeTheGradeAPI_Testing
 {
     public class TeachersControllerTests
     {
-        Teacher teacher1 = new Teacher() {Username = "teacher111", Password = "Password111", Email = "email111@gmail.com", PhoneNumber = "075541212", Address = "address2231"};
-        Teacher teacher2 = new Teacher() {Username = "teacher222", Password = "Password222", Email = "email122@gmail.com", PhoneNumber = "0756123512", Address = "address21312" };
-        DataContext context;
-        Random random;
-        ConnectionFactory factory;
-        TeachersController controller;
+        readonly Teacher teacher1 = new() {Username = "teacher111", Password = "Password111", Email = "email111@gmail.com", PhoneNumber = "075541212", Address = "address2231"};
+        readonly Teacher teacher2 = new() {Username = "teacher222", Password = "Password222", Email = "email122@gmail.com", PhoneNumber = "0756123512", Address = "address21312" };
+        readonly DataContext context;
+        readonly Random random;
+        readonly ConnectionFactory factory;
+        readonly TeachersController controller;
 
 
         public TeachersControllerTests()
         {
             random = new Random();
             factory = new();
-            context = factory.CreateContextForInMemory("teachers_database" + random.Next(100000).ToString());
+            context = ConnectionFactory.CreateContextForInMemory("teachers_database" + random.Next(100000).ToString());
             controller = new TeachersController(context);
         }
 
@@ -35,8 +35,8 @@ namespace MakeTheGradeAPI_Testing
             context.Teacher.Add(teacher2);
             context.SaveChanges();
 
-            var NumberOfTeachers = context.Teacher.Count();
-            Assert.Equal(2, NumberOfTeachers);
+            var numberOfTeachers = context.Teacher.Count();
+            Assert.Equal(2, numberOfTeachers);
 
             var teachers = controller.GetTeachers().Value.ToList();
             Assert.Equal(teacher1, teachers[0]);
@@ -46,23 +46,23 @@ namespace MakeTheGradeAPI_Testing
         [Fact]
         public async void AddTeacher()
         {
-            var AddTeacherResult = await controller.AddTeacher(new List<string> { teacher1.Username, teacher1.Password, teacher1.Email, teacher1.PhoneNumber, teacher1.Address});
+            var addTeacherResult = await controller.AddTeacher(new List<string> { teacher1.Username, teacher1.Password, teacher1.Email, teacher1.PhoneNumber, teacher1.Address});
 
-            var NumberOfTeachers = context.Teacher.Count();
-            Assert.Equal(1, NumberOfTeachers);
-            Assert.NotEqual("Teacher not added.", AddTeacherResult.Value);
+            var numberOfTeachers = context.Teacher.Count();
+            Assert.Equal(1, numberOfTeachers);
+            Assert.NotEqual("Teacher not added.", addTeacherResult.Value);
         }
 
         [Fact]
         public async void AuthenticateTeacherUsingValidValues_ShouldReturnTeacherId()
         {
             await controller.AddTeacher(new List<string> { teacher1.Username, teacher1.Password, teacher1.Email, teacher1.PhoneNumber, teacher1.Address });
-            int IncrementedTeacherId = context.Teacher.Count();
+            int incrementedTeacherId = context.Teacher.Count();
 
-            var AuthenticateTeacherData = new List<string> { teacher1.Username, teacher1.Password };
-            var AuthenticateResult = controller.Authenticate(AuthenticateTeacherData);
+            var authenticateTeacherData = new List<string> { teacher1.Username, teacher1.Password };
+            var authenticateResult = controller.Authenticate(authenticateTeacherData);
             
-            Assert.Equal(IncrementedTeacherId, AuthenticateResult.Value);
+            Assert.Equal(incrementedTeacherId, authenticateResult.Value);
 
         }
 
@@ -71,10 +71,10 @@ namespace MakeTheGradeAPI_Testing
         {
             await controller.AddTeacher(new List<string> { teacher1.Username, teacher1.Password, teacher1.Email, teacher1.PhoneNumber, teacher1.Address });
 
-            var AuthenticateTeacherData = new List<string> { "invalidUsername", "invalidPassword" };
-            var AuthenticateResult = controller.Authenticate(AuthenticateTeacherData);
+            var authenticateTeacherData = new List<string> { "invalidUsername", "invalidPassword" };
+            var authenticateResult = controller.Authenticate(authenticateTeacherData);
 
-            Assert.Equal(-1, AuthenticateResult.Value);
+            Assert.Equal(-1, authenticateResult.Value);
         }
 
     }

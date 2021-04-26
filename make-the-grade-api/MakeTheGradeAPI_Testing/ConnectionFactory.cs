@@ -8,9 +8,9 @@ namespace MakeTheGradeAPI_Testing
     {
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
-        public DataContext CreateContextForInMemory(string database)
+        public static DataContext CreateContextForInMemory(string database)
         {
             var option = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase(databaseName: database).Options;
 
@@ -24,7 +24,7 @@ namespace MakeTheGradeAPI_Testing
             return context;
         }
 
-        public DataContext CreateContextForSQLite()
+        public static DataContext CreateContextForSQLite()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
